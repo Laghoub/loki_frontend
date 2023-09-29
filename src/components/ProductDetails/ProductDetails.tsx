@@ -8,25 +8,32 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MoreDetailsComponent from '../MoreDetailsComponent/MoreDetailsComponent';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import configData from "../../config.json" ;
 interface ProductDetailsProps {}
 
 const ProductDetails = () =>{
    const { id } = useParams(); // Obtenez l'ID de l'URL
    const [productData, setProductData] = useState<any>({});
- 
+   const [loading, setLoading] = useState(true);
+   const SERVER_URL = configData.SERVER_URL;
+
    useEffect(() => {
-     // Effectuez une requête HTTP pour obtenir les détails du produit en utilisant l'ID de l'URL
-     axios.get(`http://localhost:8081/api/products/product/${id}`)
-       .then(response => {
-         // Mettez à jour l'état du composant avec les données du produit
+     axios
+       .get(`${SERVER_URL}/products/product/${id}`)
+       .then((response) => {
          setProductData(response.data);
-         console.log(response.data)
+         setLoading(false); // Set loading to false once data is loaded
        })
-       .catch(error => {
-         // Gérez les erreurs de requête ici
-         console.error('Erreur lors de la récupération des données du produit :', error);
+       .catch((error) => {
+         console.error('Error fetching product data:', error);
+         setLoading(false); // Set loading to false in case of an error
        });
    }, [id]);
+ 
+   // Conditional rendering: Show loading indicator while loading
+   if (loading) {
+     return <p>Loading...</p>;
+   }
   const stockClass = productData.quantityInStock > 0 ? 'instock' : 'outofstock';
   const stockText = productData.quantityInStock > 0 ? 'In Stock' : 'Out of Stock';
    return (
@@ -111,6 +118,7 @@ const ProductDetails = () =>{
                                     id="input-quantity"
                                     className="form-control"
                                     min={0}
+                                    max ={100}
                                     onKeyPress={(e) => {
                                        if (e.key === '-' ) {
                                           e.preventDefault();
