@@ -23,10 +23,8 @@ export default function Menu() {
   return (
     <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
       <Tabs value={value} onChange={handleChange}>
-        <Tab label="Accueil" />
-        <Tab label="Inscription" />
-        <Tab label="Achat" />
-        <Tab label="Paiement" />
+        <Tab label="Home" />
+        <Tab href="/login" label="Sign-in" />
       </Tabs>
     </Box>
   );

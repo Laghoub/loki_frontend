@@ -22,16 +22,15 @@ export default function Footer() {
         <Grid container spacing={5}>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              A propos de nous
+              About us
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Une societe de vente des produits pharmaceutiques qui propose
-              diférents produits avec pas mal de catégories
+              We are a company that sells everyting related to medical field.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              Contactez nous
+              Contact us
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Villetaneuse, paris, France
@@ -45,7 +44,7 @@ export default function Footer() {
           </Grid>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              suivez nous
+              Follow us
             </Typography>
             <Link href="https://www.facebook.com/" color="inherit">
               <Facebook />
@@ -65,7 +64,7 @@ export default function Footer() {
         <Box mt={5}>
           <Typography variant="body2" color="text.secondary" align="center">
             {"Copyright © "}
-            <Link color="inherit" href="https://your-website.com/">
+            <Link color="inherit" href="/">
               website
             </Link>{" "}
             {new Date().getFullYear()}

@@ -41,7 +41,7 @@ const HomePage = () => {
           <Grid item xs={9}>
             <ImageTransition />
             <br />
-            <h3>Produits</h3>
+            <h3>Products</h3>
             <br />
             <ProductByCat />
           </Grid>

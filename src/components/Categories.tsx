@@ -10,21 +10,12 @@ import Paper from "@mui/material/Paper";
 import axios from "axios";
 import configData from "../config.json";
 
-function createData(name: string) {
-  return { name };
-}
-
-const rows = [
-  createData("Anti-biotique"),
-  createData("Doliprane"),
-  createData("génériques"),
-  createData("stupéfiants"),
-  createData("dérivés du sang"),
-];
 
 export default function Categorie() {
   type CategorieType = {
-    nom: string;
+    id : number ;
+    name: string;
+    created : string;
   };
 
   const [categories, setCategories] = useState([] as CategorieType[]);
@@ -33,7 +24,7 @@ export default function Categorie() {
 
   useEffect(() => {
     axios
-      .get(`${SERVER_URL}/products/category`)
+      .get(`${SERVER_URL}/product-categories`)
       .then((response) => {
         setCategories(response.data);
         setLoading(false); // Set loading to false once data is loaded
@@ -54,18 +45,18 @@ export default function Categorie() {
         <TableHead>
           <TableRow>
             <TableCell sx={{ backgroundColor: "#98d648", fontSize: "20px" }}>
-              Catégorie
+              Categories
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {categories.map((categorie) => (
             <TableRow
-              key={categorie.nom}
+              key={categorie.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {categorie.nom}
+                {categorie.name}
               </TableCell>
             </TableRow>
           ))}

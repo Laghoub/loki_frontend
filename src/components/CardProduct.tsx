@@ -21,8 +21,8 @@ export default function CardProduct() {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Acheter</Button>
-        <Button size="small"> détails</Button>
+        <Button size="small">Buy</Button>
+        <Button size="small"> Details</Button>
       </CardActions>
     </Card>
   );

@@ -53,9 +53,9 @@ export default function ProductByCat() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Récents" {...a11yProps(0)} />
-          <Tab label="Mieux notés" {...a11yProps(1)} />
-          <Tab label="Tous" {...a11yProps(2)} />
+          <Tab label="Best sellers" {...a11yProps(0)} />
+          <Tab label="Best rated" {...a11yProps(1)} />
+          <Tab label="All" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
