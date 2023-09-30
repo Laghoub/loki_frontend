@@ -4,6 +4,17 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CardProduct from "./CardProduct";
+import axios from "axios";
+import configData from "../config.json";
+import { useState, ReactNode, useEffect } from "react";
+import {
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Slide,
+} from "@mui/material";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -39,11 +50,33 @@ function a11yProps(index: number) {
 }
 
 export default function ProductByCat() {
+  type ProductType = {
+    id: String;
+    reference: String;
+    name: String;
+    description: String;
+  };
   const [value, setValue] = React.useState(0);
+  const [products, setProducts] = useState([] as ProductType[]);
+  const [loading, setLoading] = useState(true);
+  const SERVER_URL = configData.SERVER_URL;
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    axios
+      .get(`${SERVER_URL}/products/`)
+      .then((response) => {
+        setProducts(response.data);
+        setLoading(false); // Set loading to false once data is loaded
+      })
+      .catch((error) => {
+        console.error("Error fetching products data:", error);
+        setLoading(false); // Set loading to false in case of an error
+      });
+  });
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -59,7 +92,16 @@ export default function ProductByCat() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <CardProduct />
+        <Grid container spacing={2}>
+          {products.map((product) => (
+            <Grid item xs={3}>
+              <CardProduct
+                nom={product.name}
+                description={product.description}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Mieux notés

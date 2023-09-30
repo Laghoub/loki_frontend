@@ -6,18 +6,19 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import para from "../assets/para.png";
+import { useState, ReactNode, useEffect } from "react";
 
-export default function CardProduct() {
+export default function CardProduct(props: any) {
+  const [nom, setNom] = useState(props);
   return (
     <Card sx={{ maxWidth: 200 }}>
       <CardMedia sx={{ height: 120 }} image={para} title="green iguana" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Paracétamol
+          {props.nom}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Le paracétamol, dont la dénomination commune internationale (DCI) est
-          l'acétaminophène,
+          {props.description}
         </Typography>
       </CardContent>
       <CardActions>

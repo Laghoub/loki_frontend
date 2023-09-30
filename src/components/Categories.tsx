@@ -14,14 +14,6 @@ function createData(name: string) {
   return { name };
 }
 
-const rows = [
-  createData("Anti-biotique"),
-  createData("Doliprane"),
-  createData("génériques"),
-  createData("stupéfiants"),
-  createData("dérivés du sang"),
-];
-
 export default function Categorie() {
   type CategorieType = {
     nom: string;
