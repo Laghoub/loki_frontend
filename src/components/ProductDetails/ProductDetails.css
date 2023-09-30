@@ -2626,25 +2626,25 @@ aside .col-sm-4,.col-sm-3 .col-sm-4 {
     margin: 10px 0 20px;
     padding: 15px 20px;
     border-radius: 0;
-    background: #98d648;
     font-size: 14px;
     line-height: 1.2em;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    color: #fff
+    border-bottom: 1px solid #98d648;
+    color: #595959;
+    
 }
 
 .breadcrumb a {
     display: inline-block;
-    color: #fff;
     font-weight: 500
 }
 
 
 
 .breadcrumb a:hover {
-    color: #f0f0f0
+    color: #98d648
 }
 
 .breadcrumb>li {
@@ -2654,9 +2654,7 @@ aside .col-sm-4,.col-sm-3 .col-sm-4 {
     font-size: larger;
 }
 
-.breadcrumb>li:last-child span {
-    color: #f0f0f0
-}
+
 
 
 
@@ -2944,10 +2942,10 @@ aside .col-sm-4,.col-sm-3 .col-sm-4 {
 }
 
 
-.stock .instock{
+.instock{
     color: #388e3c;
 }
-.stock .instock{
+.outofstock{
     color: #ff0000;
 }
 .icon-hover:hover {
@@ -3340,9 +3338,7 @@ aside .col-sm-4,.col-sm-3 .col-sm-4 {
 }
 
 @media(min-width: 1200px) {
-    .container {
-        width:1200px
-    }
+   
 
     .product-gallery .image-thumb .bx-wrapper .bx-prev {
         top: 0;
