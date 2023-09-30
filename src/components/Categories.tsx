@@ -35,10 +35,7 @@ export default function Categorie() {
       });
   });
 
-  // Conditional rendering: Show loading indicator while loading
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{}} aria-label="simple table">

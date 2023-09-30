@@ -10,7 +10,7 @@ const MoreDetailsComponent: FC<MoreDetailsComponentProps> = ({ productDesc }) =>
 
    return(
  <MoreDetailsComponentWrapper>
-       <section className="bg-light border-top py-4">
+       <section className=" py-4" style={{backgroundColor: '#f8f9fa5e'}}>
       <div className="container">
         <div className="row">
           <div >

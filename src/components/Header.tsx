@@ -174,7 +174,7 @@ export default function Header() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            LOꓘI PHARMACEUTICS
           </Typography>
           <Search>
             <SearchIconWrapper>

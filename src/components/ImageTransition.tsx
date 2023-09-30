@@ -23,7 +23,7 @@ const ImageTransition = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-9">
+        <div className="col-md-12">
           <img
             src={images[currentIndex]}
             alt={`Image ${currentIndex + 1}`}

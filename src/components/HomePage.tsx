@@ -26,29 +26,32 @@ const HomePage = () => {
     <div>
       <CssBaseline />
       <Header />
-      <br />
       <Menu />
       <br />
-      <div>
+      <div style={{  margin: '0 auto',
+  padding: '1rem'}}>
         <Grid container spacing={2}>
           {/* Première colonne */}
-          <Grid item xs={3}>
+          <Grid item xs={3} >
             <Paper>
               <Categorie />
             </Paper>
           </Grid>
           {/* Deuxième colonne */}
-          <Grid item xs={9}>
+          <Grid item xs={9} >
             <ImageTransition />
             <br />
+            <div style={{margin: '1em'}}>
             <h3>Products</h3>
-            <br />
             <ProductByCat />
+            </div>
+            
           </Grid>
         </Grid>
 
-        <Footer />
+        
       </div>
+      <Footer />
     </div>
   );
 };
