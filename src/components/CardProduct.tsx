@@ -7,23 +7,23 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import para from "../assets/para.png";
 import { useState, ReactNode, useEffect } from "react";
+import config from '../config.json'
 
 export default function CardProduct(props: any) {
-  const [nom, setNom] = useState(props);
+  const SERVER_URL = config.SERVER_URL;
+
   return (
     <Card sx={{ maxWidth: 200 }}>
-      <CardMedia sx={{ height: 120 }} image={para} title="green iguana" />
+      <CardMedia sx={{ height: 120 }} image={props.imagePath} title="green iguana" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {props.nom}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {props.description}
-        </Typography>
+       
       </CardContent>
       <CardActions>
         <Button size="small">Buy</Button>
-        <Button size="small"> Details</Button>
+        <Button  href={`./Details/${props.id}`} size="small">Details</Button>
       </CardActions>
     </Card>
   );
