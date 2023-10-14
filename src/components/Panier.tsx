@@ -2,13 +2,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "../App.css";
 import Header from "./Header";
 import Menu from "./Menu";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import React, { useState, useEffect } from "react";
-import anti from "../assets/anti.jpg";
-import para from "../assets/para.png";
-import teva from "../assets/teva.jpg";
 import { makeStyles } from "@mui/material/styles";
+import Cookies from "js-cookie";
+import pharma1 from "../assets/anti.jpg";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Grid,
@@ -16,7 +14,6 @@ import {
   ListItem,
   ListItemText,
   Paper,
-  Slide,
   Typography,
   IconButton,
   Button,
@@ -29,33 +26,65 @@ import RemoveIcon from "@mui/icons-material/Remove";
 
 const Panier = () => {
   const [livraisonExpress, setLivraisonExpress] = useState(false);
-  const [panier, setPanier] = useState([
-    {
-      id: 1,
-      nom: "Paracétamol",
-      description: "Douleur, fievre, faiblesse",
-      prix: 5.02,
-      quantite: 1,
-      image: para,
-    },
-    {
-      id: 2,
-      nom: "amoxiciline",
-      description: "Douleur, fievre, faiblesse",
-      prix: 8.32,
-      quantite: 1,
-      image: anti,
-    },
-    {
-      id: 3,
-      nom: "Teva 100mg",
-      description: "Douleur, fievre, faiblesse",
-      prix: 6.22,
-      quantite: 1,
-      image: teva,
-    },
-    // Ajoutez d'autres produits au panier si nécessaire
-  ]);
+  const [panier, setPanier] = useState([]); // Utilisez un état pour stocker les produits du panier
+  const navigate = useNavigate();
+
+  const updateQuantite = (nom: String, nouvelleQuantite: Float32Array) => {
+    // Mise à jour de l'état du panier
+    setPanier((prevState: any) =>
+      prevState.map((produit: any) =>
+        produit.nom === nom
+          ? { ...produit, quantite: nouvelleQuantite }
+          : produit
+      )
+    );
+
+    // Mise à jour des cookies avec les nouvelles quantités
+    const panierDansCookies = Cookies.get("panier");
+    if (panierDansCookies) {
+      const panierJSON = JSON.parse(panierDansCookies);
+      const nouveauPanierJSON = panierJSON.map((produit: any) => {
+        if (produit.nom === nom) {
+          produit.quantite = nouvelleQuantite;
+        }
+        return produit;
+      });
+      Cookies.set("panier", JSON.stringify(nouveauPanierJSON), { expires: 7 });
+    }
+  };
+
+  const supprimerProduit = (nom: string) => {
+    // Supprimer le produit du panier
+    setPanier((prevState) =>
+      prevState.filter((produit) => produit.nom !== nom)
+    );
+
+    // Mettre à jour les cookies
+    const panierDansCookies = Cookies.get("panier");
+    if (panierDansCookies) {
+      const panierJSON = JSON.parse(panierDansCookies);
+      const nouveauPanierJSON = panierJSON.filter(
+        (produit) => produit.nom !== nom
+      );
+      Cookies.set("panier", JSON.stringify(nouveauPanierJSON), { expires: 7 });
+    }
+  };
+
+  useEffect(() => {
+    const panierFromCookies = JSON.parse(Cookies.get("panier") || "[]");
+
+    if (panierFromCookies.length === 0) {
+      // Les cookies sont vides, redirigez vers la page "EmptyPanier"
+      Cookies.remove("panier");
+    } else {
+      setPanier(panierFromCookies);
+    }
+  }, [navigate]);
+  // Récupérez le panier depuis les cookies
+
+  const removeCok = () => {
+    Cookies.remove("panier");
+  };
 
   const montantTotal = panier.reduce(
     (total, produit) => total + produit.prix * produit.quantite,
@@ -82,69 +111,50 @@ const Panier = () => {
             <Paper>
               <List>
                 {panier.map((produit) => (
-                  <ListItem key={produit.id}>
+                  <ListItem key={produit.name}>
                     <Grid container spacing={2}>
                       <Grid item xs={3}>
                         <img
-                          src={produit.image}
+                          src={pharma1}
                           alt={produit.nom}
                           style={{ maxWidth: "100%" }}
                         />
                       </Grid>
                       <Grid item xs={6}>
-                        <ListItemText
-                          primary={produit.nom}
-                          secondary={produit.description}
-                        />
+                        <ListItemText primary={produit.nom} />
                         <ListItemText
                           secondary={"Prix unitaire: " + produit.prix + "€"}
+                        />
+                        <ListItemText
+                          secondary={"Quantité: " + produit.quantite}
+                        />
+
+                        <input
+                          type="number"
+                          value={produit.quantite}
+                          onChange={(e) =>
+                            updateQuantite(produit.nom, e.target.value)
+                          }
                         />
                       </Grid>
                       <Grid item xs={3}>
                         <Typography variant="subtitle1">
-                          {(produit.prix * produit.quantite).toFixed(2)} €
+                          {"Prix total " +
+                            (produit.prix * produit.quantite).toFixed(2)}{" "}
+                          €
                         </Typography>
                         <div>
                           {/* Bouton de diminution (rouge) */}
-                          <IconButton
-                            color="error" // Couleur rouge
-                            onClick={() => {
-                              if (produit.quantite > 1) {
-                                setPanier((prevState) =>
-                                  prevState.map((item) =>
-                                    item.id === produit.id
-                                      ? { ...item, quantite: item.quantite - 1 }
-                                      : item
-                                  )
-                                );
-                              }
-                            }}
-                          >
-                            <RemoveIcon />
-                          </IconButton>
-                          <span>{produit.quantite}</span>
-                          {/* Bouton d'augmentation (vert) */}
-                          <IconButton
-                            color="success" // Couleur verte
-                            onClick={() => {
-                              setPanier((prevState) =>
-                                prevState.map((item) =>
-                                  item.id === produit.id
-                                    ? { ...item, quantite: item.quantite + 1 }
-                                    : item
-                                )
-                              );
-                            }}
-                          >
-                            <AddIcon />
-                          </IconButton>
+
                           {/* Icône de suppression */}
                           <IconButton
                             color="error" // Couleur rouge
                             onClick={() => {
+                              supprimerProduit(produit.nom);
+
                               setPanier((prevState) =>
                                 prevState.filter(
-                                  (item) => item.id !== produit.id
+                                  (item) => item.nom !== produit.nom
                                 )
                               );
                             }}
@@ -192,10 +202,7 @@ const Panier = () => {
                     backgroundColor: "#4CAF50", // Couleur verte
                     color: "#fff",
                   }}
-                  onClick={() => {
-                    // Ajoutez ici la logique de validation de la commande
-                    alert("Commande validée !");
-                  }}
+                  onClick={removeCok}
                 >
                   Valider la commande
                 </Button>
