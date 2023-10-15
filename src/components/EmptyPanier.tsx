@@ -1,9 +1,14 @@
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Header from "./Header";
+import Footer from "./Footer";
+import Menu from "./Menu";
 
 const EmptyPanier = () => {
   return (
+    <><Header />
+    <Menu />
     <Container
       style={{
         display: "flex",
@@ -18,7 +23,7 @@ const EmptyPanier = () => {
       <Typography variant="h5" align="center" color="textSecondary">
         Vous n'avez aucun produit dans votre panier
       </Typography>
-    </Container>
+    </Container><Footer /></>
   );
 };
 

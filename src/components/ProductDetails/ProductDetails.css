@@ -2945,6 +2945,9 @@ aside .col-sm-4,.col-sm-3 .col-sm-4 {
 .instock{
     color: #388e3c;
 }
+.low-stock{
+    color: #ffb900;
+}
 .outofstock{
     color: #ff0000;
 }

@@ -1,0 +1,44 @@
+/* Add styles to blur the background */
+
+.confirmation-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    padding: 20px; /* Add padding to the content inside the popup */
+    background-color: rgb(244 244 244); /* Set the background color */
+    border-radius: 10px; /* Add rounded corners */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
+    border: 1px solid #addbaf;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px #98d648 ;
+    padding: 20px;
+    text-align: center;
+    z-index: 1000;
+    font-size: 20px;
+  }
+  
+  .confirmation-buttons {
+    margin-top: 20px;
+  }
+  
+  .confirmation-buttons button {
+    margin: 5px;
+    padding: 11px 15px;
+    border: none;
+    background-color: #98d648;;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .confirmation-buttons button:first-child:hover {
+   background-color: #fff;
+   border: 1px solid #98d648;
+
+   color: #98d648 ;
+  }
+  
+  .confirmation-buttons button:last-child:hover {
+    background-color: red;
+}

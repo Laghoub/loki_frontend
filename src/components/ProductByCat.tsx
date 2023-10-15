@@ -102,7 +102,7 @@ export default function ProductByCat() {
           aria-label="basic tabs example"
         >
           <Tab label="Best sellers" {...a11yProps(0)} />
-          <Tab label="Recommanded products" {...a11yProps(1)} />
+        {/* <Tab label="Recommanded products" {...a11yProps(1)} />*/}  
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
