@@ -5,7 +5,7 @@ import Menu from "./Menu";
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/material/styles";
 import Cookies from "js-cookie";
-import pharma1 from "../assets/anti.jpg";
+import pharma1 from "../assets/No_image_available.png";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -23,8 +23,10 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete"; // Icône de suppression
 import AddIcon from "@mui/icons-material/Add"; // Icône d'ajout
 import RemoveIcon from "@mui/icons-material/Remove";
+import configData from "../config.json";
 
 const Panier = () => {
+  const livraisonExpressValue = configData.SHIPPINGEXPRESS;
   const [livraisonExpress, setLivraisonExpress] = useState(false);
   const [panier, setPanier] = useState([]); // Utilisez un état pour stocker les produits du panier
   const navigate = useNavigate();
@@ -82,8 +84,11 @@ const Panier = () => {
   }, [navigate]);
   // Récupérez le panier depuis les cookies
 
-  const removeCok = () => {
-    Cookies.remove("panier");
+  const removeCok = (id: any) => {
+    console.log(Cookies.get("panier") + " " + montantTotal);
+    navigate("/Checkout", {
+      state: { montantTotal: montantAvecLivraison.toFixed(2) },
+    });
   };
 
   const montantTotal = panier.reduce(
@@ -92,7 +97,7 @@ const Panier = () => {
   );
 
   const montantAvecLivraison = livraisonExpress
-    ? montantTotal + 4
+    ? montantTotal + livraisonExpressValue
     : montantTotal;
 
   return (
@@ -185,7 +190,7 @@ const Panier = () => {
                     onChange={() => setLivraisonExpress(!livraisonExpress)}
                   />
                 }
-                label="Livraison express (+4 €)"
+                label="Livraison express"
               />
 
               {/* Montant total */}

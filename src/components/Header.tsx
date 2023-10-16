@@ -168,7 +168,7 @@ export default function Header() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            
           </IconButton>
           <Typography
             variant="h6"
@@ -176,8 +176,9 @@ export default function Header() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            LOꓘI PHARMACEUTICS
+           <a href ="/">LOꓘI PHARMACEUTICS</a> 
           </Typography>
+          {/* 
           <Search>
             <SearchIconWrapper>
               {" "}
@@ -187,19 +188,15 @@ export default function Header() {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search>
+  </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link to="/panier">
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="default"
-              >
-                <ShoppingCartIcon />
-              </IconButton>
+             
+                <ShoppingCartIcon style={{ color: "white" }} />
+              
             </Link>
-            <IconButton
+           {/* <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
@@ -231,6 +228,7 @@ export default function Header() {
             >
               <MoreIcon />
             </IconButton>
+  */} 
           </Box>
         </Toolbar>
       </AppBar>

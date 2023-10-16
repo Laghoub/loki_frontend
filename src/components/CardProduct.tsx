@@ -8,13 +8,15 @@ import Typography from "@mui/material/Typography";
 import para from "../assets/para.png";
 import { useState, ReactNode, useEffect } from "react";
 import config from '../config.json'
+import pharma1 from "../assets/No_image_available.png";
+
 
 export default function CardProduct(props: any) {
   const SERVER_URL = config.SERVER_URL;
 
   return (
     <Card sx={{ maxWidth: 200 }}>
-      <CardMedia sx={{ height: 120 }} image={props.imagePath} title="green iguana" />
+      <CardMedia sx={{ height: 120 }} image={pharma1} title={props.nom} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {props.nom}
@@ -22,8 +24,8 @@ export default function CardProduct(props: any) {
        
       </CardContent>
       <CardActions>
-        <Button size="small">Buy</Button>
-        <Button  href={`./Details/${props.id}`} size="small">Details</Button>
+        <Button size="small" disabled>Buy</Button>
+        <Button  href={`./Details/${props.id}`} style={{color:'#1976d2'}} size="small">Details</Button>
       </CardActions>
     </Card>
   );

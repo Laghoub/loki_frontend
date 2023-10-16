@@ -1,4 +1,5 @@
 {
-    "SERVER_URL": "http://localhost:8081/api"
-
+    "SERVER_URL": "http://localhost:8081/api",
+    "SHIPPING": 5,
+    "SHIPPINGEXPRESS":4
   }

@@ -7,6 +7,8 @@ import ProductDetails from "./ProductDetails/ProductDetails";
 import Panier from "./Panier";
 import EmptyPanier from "./EmptyPanier";
 import Cookies from "js-cookie";
+import PaiementPage from "./PaiementPage/PaiementPage";
+import PopupCheckout from "./PopupCheckout/PopupCheckout";
 
 const AppRouter = () => {
   const panierCookie = Cookies.get("panier");
@@ -21,6 +23,15 @@ const AppRouter = () => {
         />
 
         <Route path="/details/:id" element={<ProductDetails />} />
+        <Route path="/Checkout" element={<PaiementPage />} />
+        <Route path="/Confirm" element={<PopupCheckout onConfirm={function (): void {
+          throw new Error("Function not implemented.");
+        } } onCancel={function (): void {
+          throw new Error("Function not implemented.");
+        } } />} />
+
+
+      
       </Routes>
     </BrowserRouter>
   );

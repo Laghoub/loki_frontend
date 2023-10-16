@@ -1,0 +1,15 @@
+
+    .Bill-form{
+        margin: 2em;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .card-body input{
+        margin: 2em;
+
+    }
+
+    
