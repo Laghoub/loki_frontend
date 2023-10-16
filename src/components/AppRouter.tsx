@@ -24,7 +24,11 @@ const AppRouter = () => {
 
         <Route path="/details/:id" element={<ProductDetails />} />
         <Route path="/Checkout" element={<PaiementPage />} />
-        <Route path="/Confirm" element={<PopupCheckout />} />
+        <Route path="/Confirm" element={<PopupCheckout onConfirm={function (): void {
+          throw new Error("Function not implemented.");
+        } } onCancel={function (): void {
+          throw new Error("Function not implemented.");
+        } } />} />
 
 
       

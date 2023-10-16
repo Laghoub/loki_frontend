@@ -8,30 +8,11 @@ import PopupCheckout from '../PopupCheckout/PopupCheckout';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import configData from "../../config.json" ;
 
-interface PaiementPageProps extends HTMLFormControlsCollection {
-  firstName: {value:''},
-  lastName: {value:''},
-  company: {value:''},
-  address: {value:''},
-  postalCode: {value:0},
-  city: {value:''},
-  email: {value:''},
-  phone: {value:0},
-  additionalInfo: {value:''},
-  additionalPurchaseDetails : {value:''},
-  cardNumber : {value:undefined},
-  cardName : {value: undefined },
-  cardCvv : {value:undefined},
-  monthExp : {value:undefined},
-  yearExp : {value:undefined}
-
-};
 
 
-interface CustomForm extends HTMLFormElement {
-  readonly elements: PaiementPageProps;
-}
-const PaiementPage: FC<PaiementPageProps> = () => {
+
+
+const PaiementPage: FC = () => {
   const location = useLocation();
 
   const SERVER_URL = configData.SERVER_URL;
@@ -59,31 +40,6 @@ const PaiementPage: FC<PaiementPageProps> = () => {
     }
   };
 
-  const onSubmit = (event: FormEvent<CustomForm>) => {
-    event.preventDefault();
-    const target = event.currentTarget.elements;
-    setConfirmationPopupVisible(true);
-
- 
-    const data = {
-      firstName: target.firstName.value,
-      lastName: target.lastName.value,
-      company: target.company.value,
-      address: target.address.value,
-      postalCode: target.postalCode.value,
-      email: target.email.value,
-      phone: target.phone.value,
-      additionalInfo: target.additionalInfo.value,
-      cardNumber: undefined || target.cardNumber.value,
-      cardName: undefined ||target.cardName.value,
-      cardCvv : undefined ||target.cardCvv.value,
-      monthExp: undefined ||target.monthExp.value,
-      yearExp : undefined ||target.yearExp.value,
-      additionalPurchaseDetails: target.additionalPurchaseDetails.value
-    };
- 
-    console.log(data);
-  };
   let navigate = useNavigate();
 
   const [isConfirmationPopupVisible, setConfirmationPopupVisible] = useState(false);
@@ -133,6 +89,29 @@ const PaiementPage: FC<PaiementPageProps> = () => {
         console.error('Error fetching total charge:', error);
       });
   }, [SERVER_URL]); */} 
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const data = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      company: formData.get('company'),
+      address: formData.get('address'),
+      postalCode: formData.get('postalCode'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      additionalInfo: formData.get('additionalInfo'),
+      cardNumber: formData.get('cardNumber'),
+      cardName: formData.get('cardName'),
+      cardCvv: formData.get('cardCvv'),
+      monthExp: formData.get('monthExp'),
+      yearExp: formData.get('yearExp'),
+      additionalPurchaseDetails: formData.get('additionalPurchaseDetails'),
+    };
+    setConfirmationPopupVisible(true)
+    console.log(data)
+  }
   return (
     <div >
       <Header />
@@ -156,6 +135,7 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                         <input
                           type="text"
                           id="firstName"
+                          name="firstName"
                           className="form-control"
                           maxLength={50}
                           required
@@ -173,6 +153,8 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                           type="text"
                           id="lastName"
                           className="form-control"
+                          name="lastName"
+
                           maxLength={50}
                           required
                         />
@@ -190,6 +172,8 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                     <input
                       type="text"
                       id="company"
+                      name="company"
+
                       className="form-control"
                       maxLength={150}
                     />
@@ -204,6 +188,8 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                     <input
                       type="text"
                       id="address"
+                      name="address"
+
                       className="form-control"
                       required
                     />
@@ -220,6 +206,8 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                       <input
                         type="number"
                         id="postalCode"
+                        name="postalCode"
+
                         className="form-control mb-3"
                         required
                       />
@@ -231,6 +219,7 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                       <input
                         type="text"
                         id="city"
+                        name="city"
                         className="form-control mb-3"
                         required
                       />
@@ -247,6 +236,7 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                     <input
                       type="email"
                       id="email"
+                      name="email"
                       className="form-control"
                       required
                     />
@@ -261,6 +251,7 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                     <input
                       type="tel"
                       id="phone"
+                      name="phone"
                       className="form-control"
                       value={phone}
                       onChange={handlePhoneChange}
@@ -277,6 +268,7 @@ const PaiementPage: FC<PaiementPageProps> = () => {
                     <textarea
                       className="form-control"
                       id="additionalInfo"
+                      name="additionalInfo"
                       rows={4}
                     ></textarea>
 

@@ -108,6 +108,7 @@ const CheckoutForm: React.FC = () => {
                   id="cardNumber"
                   className={`margin-bot1 form-control ${isCardNumberValid ? '' : 'is-invalid'}`}
                   placeholder="Card Number"
+                  name="cardNumber"
                   value={cardNumber}
                   onChange={handleCardNumberChange}
                 />
@@ -121,6 +122,7 @@ const CheckoutForm: React.FC = () => {
                   className="form-control margin-bot1"
                   placeholder="Card Holder's name"
                   value={cardName}
+                  name="cardName"
                   onChange={handleCardNameChange}
                 />
 
@@ -131,6 +133,7 @@ const CheckoutForm: React.FC = () => {
                       id="cardCvv"
                       className={`margin-bot1 form-control ${cvvError ? 'is-invalid' : ''}`}
                       placeholder="CVV"
+                      name="cardCvv"
                       value={cvv}
                       onChange={handleCvvChange}
                     />
@@ -145,6 +148,7 @@ const CheckoutForm: React.FC = () => {
                         type="text"
                         id="monthExp"
                         placeholder="MM"
+                        name="monthExp"
                         style={{ width: '6em' }}
                         className={`margin-bot1 form-control  ${monthError ? 'is-invalid' : ''}`}
                         value={month}
@@ -156,6 +160,7 @@ const CheckoutForm: React.FC = () => {
                         id="yearExp"
                         placeholder="YY"
                         style={{ width: '6em' }}
+                        name="yearExp"
                         className={`margin-bot1  form-control ${yearError ? 'is-invalid' : ''}`}
                         value={year}
                         onChange={handleYearChange}

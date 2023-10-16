@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styles from './PopupCheckout.module.css'; // Import the CSS module
+import { useNavigate } from 'react-router-dom';
 
 interface PopupCheckoutProps {
   onConfirm: () => void;
@@ -7,12 +8,19 @@ interface PopupCheckoutProps {
 }
 
 const PopupCheckout: FC<PopupCheckoutProps> = ({ onConfirm, onCancel }) => {
+  let navigate = useNavigate();
+
+ const none= () => {
+
+  alert("Unavailable at the moment")
+  navigate('/')
+ }
   return (
     <div className={styles['confirmation-popup']}>
       <p>Do you want to confirm your purchase?</p>
       <div className={styles['confirmation-buttons']}>
-        <button disabled onClick={onConfirm}>Confirm</button>
-        <button disabled onClick={onCancel}>Cancel</button>
+        <button  onClick={none}>Confirm</button>
+        <button  onClick={none}>Cancel</button>
       </div>
     </div>
   );

@@ -59,16 +59,18 @@ const ProductDetails = () => {
       const existingProductIndex = panier.findIndex(
          (item: any) => item.nom === productData.name
       );
-
+         console.log(quantity)
       if (existingProductIndex !== -1) {
          // Si le produit existe, augmentez la quantité
-         panier[existingProductIndex].quantite++;
+         panier[existingProductIndex].quantite+quantity;
       } else {
          // Sinon, ajoutez un nouvel élément au panier
+         console.log
          panier.push({
             nom: productData.name,
-            prix: productData.weightedAveragePrice,
-            quantite: quantity, // Nouveau produit, initialisé à une quantité de 1
+            prix: productData.weightedAveragePrice.toFixed(2),
+
+            quantite: quantity, 
          });
          
       }
@@ -170,7 +172,7 @@ if (productQuantity > 50) {
                      <div className="general_info product-info">
                         <span
                            style={{
-                              color: "#0000004f;",
+                              color: "#0000004f",
                               textAlign: "center",
                               padding: "10px",
                               marginBottom: "30px",
@@ -217,8 +219,12 @@ if (productQuantity > 50) {
                                     id="input-quantity"
                                     className="form-control"
                                     min={0}
-                                    max={100}
+                                    max={9}
                                     value={quantity}
+                                    onChange={(e:any) => {
+            
+                                       setQuantity(e.target.value);
+                                     }}
 
                                     onKeyPress={(e) => {
                                        if (e.key === "-") {

@@ -59,7 +59,7 @@ const Panier = () => {
   const supprimerProduit = (nom: string) => {
     // Supprimer le produit du panier
     setPanier((prevState) =>
-      prevState.filter((produit) => produit.nom !== nom)
+      prevState.filter((produit:any) => produit.nom !== nom)
     );
 
     // Mettre à jour les cookies
@@ -67,7 +67,7 @@ const Panier = () => {
     if (panierDansCookies) {
       const panierJSON = JSON.parse(panierDansCookies);
       const nouveauPanierJSON = panierJSON.filter(
-        (produit) => produit.nom !== nom
+        (produit:any) => produit.nom !== nom
       );
       Cookies.set("panier", JSON.stringify(nouveauPanierJSON), { expires: 7 });
     }
@@ -88,13 +88,13 @@ const Panier = () => {
   const removeCok = (id:any) => {
    
     console.log(Cookies.get("panier")+" "+montantTotal)
-    navigate('/Checkout', { state: { montantTotal: montantAvecLivraison } });
+    navigate('/Checkout', { state: { montantTotal: montantAvecLivraison.toFixed(2) } });
 
     
   };
 
   const montantTotal = panier.reduce(
-    (total, produit) => total + produit.prix * produit.quantite,
+    (total, produit:any) => total + produit.prix * produit.quantite,
     0
   );
 
@@ -117,7 +117,7 @@ const Panier = () => {
           <Grid item xs={8}>
             <Paper>
               <List>
-                {panier.map((produit) => (
+                {panier.map((produit:any) => (
                   <ListItem key={produit.name}>
                     <Grid container spacing={2}>
                       <Grid item xs={3}>
@@ -139,7 +139,7 @@ const Panier = () => {
                         <input
                           type="number"
                           value={produit.quantite}
-                          onChange={(e) =>
+                          onChange={(e:any) =>
                             updateQuantite(produit.nom, e.target.value)
                           }
                         />
@@ -161,7 +161,7 @@ const Panier = () => {
 
                               setPanier((prevState) =>
                                 prevState.filter(
-                                  (item) => item.nom !== produit.nom
+                                  (item:any) => item.nom !== produit.nom
                                 )
                               );
                             }}
