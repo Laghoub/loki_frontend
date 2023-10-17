@@ -32,7 +32,7 @@ export default function Categorie() {
         console.error("Error fetching categories data:", error);
         setLoading(false); // Set loading to false in case of an error
       });
-  });
+  }, []);
 
   return (
     <TableContainer component={Paper}>

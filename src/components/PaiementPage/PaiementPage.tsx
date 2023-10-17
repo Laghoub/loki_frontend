@@ -63,7 +63,7 @@ const PaiementPage: FC = () => {
   const [totalCharge, setTotalCharge] = useState<number>(0);
 
   const shipping_fee = configData.SHIPPING;
-
+  console.log(totalCharge)
   useEffect(() => {
     if (location.state && location.state.montantTotal) {
       setInitFee(Number(location.state.montantTotal));

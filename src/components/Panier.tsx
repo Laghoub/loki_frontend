@@ -106,7 +106,7 @@ const Panier = () => {
       <Header />
       <Menu />
       <Typography component="h1" variant="h5">
-        RESUME OF MY CARD
+        MY CART
       </Typography>
 
       <div style={{ margin: "0 auto", padding: "4rem" }}>
@@ -143,7 +143,7 @@ const Panier = () => {
                         />
                       </Grid>
                       <Grid item xs={3}>
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle1" >
                           {"Total price " +
                             (produit.prix * produit.quantite).toFixed(2)}{" "}
                           €

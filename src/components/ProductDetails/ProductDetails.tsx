@@ -13,7 +13,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import uboprofene from "../../assets/ibuprofene.png"
+import uboprofene from "../../assets/No_image_available.png"
 
 
 
@@ -158,7 +158,7 @@ if (productQuantity > 50) {
 
                         <div className="row">
                            <div className="col-lg-9 pull-right hidden-xs hidden-sm hidden-md text-center">
-                              <img width="800" height="800" id="productZoom" src={productData.image} />
+                              <img width="800" height="800" id="productZoom" src={uboprofene} />
                            </div>
 
 
@@ -186,7 +186,7 @@ if (productQuantity > 50) {
                         <ul className="list-unstyled product-section">
                            <li>
                               <strong>Brand:</strong>
-                              <a href={`./${productData.brand}`}>{productData.brand}</a>
+                              <a >{productData.brand}</a>
                            </li>
                            <li>
                               <strong>Product Code:</strong>

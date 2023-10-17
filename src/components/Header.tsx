@@ -176,7 +176,7 @@ export default function Header() {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-           <a href ="/">LOꓘI PHARMACEUTICS</a> 
+           <Link to="/"><a style={{color:'white'}}>LOꓘI PHARMACEUTICS</a></Link>
           </Typography>
           {/* 
           <Search>
