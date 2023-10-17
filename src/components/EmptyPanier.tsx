@@ -7,23 +7,26 @@ import Menu from "./Menu";
 
 const EmptyPanier = () => {
   return (
-    <><Header />
-    <Menu />
-    <Container
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <ShoppingCartIcon style={{ fontSize: 200, color: "gray" }} />
-      <br />
-      <Typography variant="h5" align="center" color="textSecondary">
-        Vous n'avez aucun produit dans votre panier
-      </Typography>
-    </Container><Footer /></>
+    <>
+      <Header />
+      <Menu />
+      <Container
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <ShoppingCartIcon style={{ fontSize: 200, color: "gray" }} />
+        <br />
+        <Typography variant="h5" align="center" color="textSecondary">
+          You have no products in your card
+        </Typography>
+      </Container>
+      <Footer />
+    </>
   );
 };
 

@@ -1,32 +1,32 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import styles from './PaiementPage.module.css';
-import Header from '../Header';
-import Menu from '../Menu';
-import BillingDetailsForm from '../ShippingComponent/BillingDetailsForm';
-import CheckoutForm from '../ShippingComponent/CheckoutForm';
-import PopupCheckout from '../PopupCheckout/PopupCheckout';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import configData from "../../config.json" ;
-
-
-
-
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import styles from "./PaiementPage.module.css";
+import Header from "../Header";
+import Menu from "../Menu";
+import BillingDetailsForm from "../ShippingComponent/BillingDetailsForm";
+import CheckoutForm from "../ShippingComponent/CheckoutForm";
+import PopupCheckout from "../PopupCheckout/PopupCheckout";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import configData from "../../config.json";
 
 const PaiementPage: FC = () => {
   const location = useLocation();
 
   const SERVER_URL = configData.SERVER_URL;
 
-
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const handleEmailChange = (e: any) => {
     let inputValue = e.target.value;
 
     // Regular expression to validate email format
-    const emailPattern = /^[a-zA-Z0-9._-]*[a-zA-Z0-9]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const emailPattern =
+      /^[a-zA-Z0-9._-]*[a-zA-Z0-9]@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-    if (emailPattern.test(inputValue) || inputValue === '' || inputValue === undefined) {
+    if (
+      emailPattern.test(inputValue) ||
+      inputValue === "" ||
+      inputValue === undefined
+    ) {
       setEmail(inputValue);
     }
   };
@@ -35,46 +35,49 @@ const PaiementPage: FC = () => {
     let inputValue = e.target.value;
     // Regular expression to validate phone number format
     const phonePattern = /^\d{0,10}$/; // Allowing 0 to 10 digits
-    if (phonePattern.test(inputValue) || inputValue === ''|| inputValue.length <10) {
+    if (
+      phonePattern.test(inputValue) ||
+      inputValue === "" ||
+      inputValue.length < 10
+    ) {
       setPhone(inputValue);
     }
   };
 
   let navigate = useNavigate();
 
-  const [isConfirmationPopupVisible, setConfirmationPopupVisible] = useState(false);
+  const [isConfirmationPopupVisible, setConfirmationPopupVisible] =
+    useState(false);
   const handleConfirmation = (confirmed: boolean) => {
     if (confirmed) {
-      console.log('Purchase confirmed');
-      navigate('/')
-
-    }
-    else {
-      navigate('/')
-
+      console.log("Purchase confirmed");
+      navigate("/");
+    } else {
+      navigate("/");
     }
   };
 
-   // Get the total price and add shupping fee
+  // Get the total price and add shupping fee
 
-   const [initFee, setInitFee] = useState<number | null>(null);
-   const [totalCharge, setTotalCharge] = useState<number>(0);
-   
-   const shipping_fee = configData.SHIPPING;
-   
-   useEffect(() => {
-     if (location.state && location.state.montantTotal) {
-       setInitFee(Number(location.state.montantTotal));
-     }
-   }, [location.state]);
-   
-   useEffect(() => {
-     if (initFee !== null) {
-       setTotalCharge(initFee + shipping_fee);
-     }
-   }, [initFee, shipping_fee]);
+  const [initFee, setInitFee] = useState<number | null>(null);
+  const [totalCharge, setTotalCharge] = useState<number>(0);
 
- {/*useEffect(() => {
+  const shipping_fee = configData.SHIPPING;
+
+  useEffect(() => {
+    if (location.state && location.state.montantTotal) {
+      setInitFee(Number(location.state.montantTotal));
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    if (initFee !== null) {
+      setTotalCharge(initFee + shipping_fee);
+    }
+  }, [initFee, shipping_fee]);
+
+  {
+    /*useEffect(() => {
     const id = orderId; // Replace with the actual id parameter or source
     const apiUrl = `${SERVER_URL}/commands/${id}`;
 
@@ -88,32 +91,33 @@ const PaiementPage: FC = () => {
       .catch((error) => {
         console.error('Error fetching total charge:', error);
       });
-  }, [SERVER_URL]); */} 
+  }, [SERVER_URL]); */
+  }
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
     const data = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      company: formData.get('company'),
-      address: formData.get('address'),
-      postalCode: formData.get('postalCode'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      additionalInfo: formData.get('additionalInfo'),
-      cardNumber: formData.get('cardNumber'),
-      cardName: formData.get('cardName'),
-      cardCvv: formData.get('cardCvv'),
-      monthExp: formData.get('monthExp'),
-      yearExp: formData.get('yearExp'),
-      additionalPurchaseDetails: formData.get('additionalPurchaseDetails'),
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      company: formData.get("company"),
+      address: formData.get("address"),
+      postalCode: formData.get("postalCode"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      additionalInfo: formData.get("additionalInfo"),
+      cardNumber: formData.get("cardNumber"),
+      cardName: formData.get("cardName"),
+      cardCvv: formData.get("cardCvv"),
+      monthExp: formData.get("monthExp"),
+      yearExp: formData.get("yearExp"),
+      additionalPurchaseDetails: formData.get("additionalPurchaseDetails"),
     };
-    setConfirmationPopupVisible(true)
-    console.log(data)
-  }
+    setConfirmationPopupVisible(true);
+    console.log(data);
+  };
   return (
-    <div >
+    <div>
       <Header />
       <Menu />
       <div className="Bill-form" style={{ margin: "2em" }}>
@@ -140,7 +144,6 @@ const PaiementPage: FC = () => {
                           maxLength={50}
                           required
                         />
-
                       </div>
                     </div>
 
@@ -154,11 +157,9 @@ const PaiementPage: FC = () => {
                           id="lastName"
                           className="form-control"
                           name="lastName"
-
                           maxLength={50}
                           required
                         />
-
                       </div>
                     </div>
                   </div>
@@ -166,20 +167,17 @@ const PaiementPage: FC = () => {
                   {/* Text input */}
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="company">
-
                       Company name
                     </label>
                     <input
                       type="text"
                       id="company"
                       name="company"
-
                       className="form-control"
                       maxLength={150}
                     />
-
                   </div>
-    <br />
+                  <br />
                   {/* Text input */}
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="address">
@@ -189,16 +187,12 @@ const PaiementPage: FC = () => {
                       type="text"
                       id="address"
                       name="address"
-
                       className="form-control"
                       required
                     />
-
                   </div>
                   <br />
                   <div className="form-outline mb-6 row">
-
-
                     <div className="col-md-2">
                       <label className="form-label" htmlFor="postalCode">
                         Postal Code
@@ -207,7 +201,6 @@ const PaiementPage: FC = () => {
                         type="number"
                         id="postalCode"
                         name="postalCode"
-
                         className="form-control mb-3"
                         required
                       />
@@ -223,9 +216,7 @@ const PaiementPage: FC = () => {
                         className="form-control mb-3"
                         required
                       />
-
                     </div>
-
                   </div>
 
                   {/* Email input */}
@@ -240,7 +231,6 @@ const PaiementPage: FC = () => {
                       className="form-control"
                       required
                     />
-
                   </div>
                   <br />
                   {/* Number input */}
@@ -257,7 +247,6 @@ const PaiementPage: FC = () => {
                       onChange={handlePhoneChange}
                       required
                     />
-
                   </div>
                   <br />
                   {/* Message input */}
@@ -271,7 +260,6 @@ const PaiementPage: FC = () => {
                       name="additionalInfo"
                       rows={4}
                     ></textarea>
-
                   </div>
 
                   {/* Checkbox 
@@ -300,11 +288,11 @@ const PaiementPage: FC = () => {
                   <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                       Products
-                      <span>$ {initFee}</span>
+                      <span> {initFee} €</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center px-0">
                       Shipping
-                      <span>$ {shipping_fee}</span>
+                      <span> {shipping_fee} € </span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                       <div>
@@ -314,7 +302,7 @@ const PaiementPage: FC = () => {
                         </strong>
                       </div>
                       <span>
-                        <strong>$ {totalCharge}</strong>
+                        <strong> {totalCharge} €</strong>
                       </span>
                     </li>
                   </ul>
@@ -322,7 +310,6 @@ const PaiementPage: FC = () => {
                   <button
                     type="submit"
                     className="btn btn-primary btn-lg btn-block"
-
                   >
                     Make purchase
                   </button>
@@ -335,10 +322,13 @@ const PaiementPage: FC = () => {
       </div>
 
       {isConfirmationPopupVisible && (
-        <PopupCheckout onConfirm={() => handleConfirmation(true)} onCancel={() => handleConfirmation(false)} />
+        <PopupCheckout
+          onConfirm={() => handleConfirmation(true)}
+          onCancel={() => handleConfirmation(false)}
+        />
       )}
     </div>
   );
-}
+};
 
 export default PaiementPage;

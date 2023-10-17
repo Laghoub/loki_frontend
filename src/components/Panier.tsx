@@ -106,7 +106,7 @@ const Panier = () => {
       <Header />
       <Menu />
       <Typography component="h1" variant="h5">
-        Récapitulatif de mon panier
+        RESUME OF MY CARD
       </Typography>
 
       <div style={{ margin: "0 auto", padding: "4rem" }}>
@@ -128,10 +128,10 @@ const Panier = () => {
                       <Grid item xs={6}>
                         <ListItemText primary={produit.nom} />
                         <ListItemText
-                          secondary={"Prix unitaire: " + produit.prix + "€"}
+                          secondary={"Unit price: " + produit.prix + "€"}
                         />
                         <ListItemText
-                          secondary={"Quantité: " + produit.quantite}
+                          secondary={"Quantity: " + produit.quantite}
                         />
 
                         <input
@@ -144,7 +144,7 @@ const Panier = () => {
                       </Grid>
                       <Grid item xs={3}>
                         <Typography variant="subtitle1">
-                          {"Prix total " +
+                          {"Total price " +
                             (produit.prix * produit.quantite).toFixed(2)}{" "}
                           €
                         </Typography>
@@ -182,20 +182,22 @@ const Panier = () => {
                 textAlign: "center", // Centre le contenu horizontalement
               }}
             >
-              {/* Demande de livraison express */}
+              {/* Demande de livraison express 
               <FormControlLabel
                 control={
+                  
                   <Checkbox
                     checked={livraisonExpress}
                     onChange={() => setLivraisonExpress(!livraisonExpress)}
                   />
                 }
-                label="Livraison express"
+                label="Express 
+                delivery (4€)"
               />
-
+              */}
               {/* Montant total */}
               <Box>
-                <Typography variant="h6">Montant total</Typography>
+                <Typography variant="h6">Total amount </Typography>
                 <Typography variant="h4" style={{ padding: "8px 0" }}>
                   {montantAvecLivraison.toFixed(2)} €
                 </Typography>
@@ -209,7 +211,7 @@ const Panier = () => {
                   }}
                   onClick={removeCok}
                 >
-                  Valider la commande
+                  confirm the command
                 </Button>
               </div>
             </Paper>
