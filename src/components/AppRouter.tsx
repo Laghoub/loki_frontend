@@ -9,6 +9,8 @@ import EmptyPanier from "./EmptyPanier";
 import Cookies from "js-cookie";
 import PaiementPage from "./PaiementPage/PaiementPage";
 import PopupCheckout from "./PopupCheckout/PopupCheckout";
+import FailComponent from "./FailComponent/FailComponent";
+import RecapComponent from "./recapComponent/RecapComponent";
 
 const AppRouter = () => {
   const panierCookie = Cookies.get("panier");
@@ -28,7 +30,12 @@ const AppRouter = () => {
           throw new Error("Function not implemented.");
         } } onCancel={function (): void {
           throw new Error("Function not implemented.");
+        } } dataForm={undefined} onClose={function (): void {
+          throw new Error("Function not implemented.");
         } } />} />
+        <Route path="/failedOrder" element={<FailComponent />} />
+        <Route path="/succesOrder" element={<RecapComponent />} />
+
 
 
       
