@@ -86,7 +86,7 @@ const CheckoutForm: React.FC = () => {
                 Cash on Delivery
               </label>
             </div>
-            <div className="form-check mb-3">
+           {/*<div className="form-check mb-3">
               <input
                 type="radio"
                 name="paymentMethod"
@@ -98,7 +98,7 @@ const CheckoutForm: React.FC = () => {
               <label className="form-check-label">
                 Card Payment
               </label>
-            </div>
+            </div> */} 
 
             {/* Card Details (Visible when Card Payment is selected) */}
             {paymentMethod === 'card-payment' && (
@@ -185,16 +185,7 @@ const CheckoutForm: React.FC = () => {
 
             )}
 
-            {/* Additional Purchase Details */}
-            <div className="form-outline mb-4">
-              <textarea
-                className="form-control"
-                id="additionalPurchaseDetails"
-                rows={4}
-                placeholder="Additional Purchase Details"
-              ></textarea>
 
-            </div>
         </div>
       </div>
     </div>

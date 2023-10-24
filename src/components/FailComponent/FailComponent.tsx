@@ -1,13 +1,23 @@
-import React, { FC } from 'react';
+import { FC, useEffect } from 'react';
 import './failComponent.module.css';
 import Header from '../Header';
 import dislike from '../../assets/emojidislike.png'
 import Footer from '../Footer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 interface FailComponentProps { }
 
-const FailComponent: FC<FailComponentProps> = () => (
+const FailComponent: FC<FailComponentProps> = () => {
+  let navigate = useNavigate();
+  const isCookie = Cookies.get('panier')
+
+  if(isCookie == undefined|| isCookie == "[]"|| isCookie == "" ){
+    useEffect(() => {
+      navigate("/")
+    }, []);
+  }
+  return(
   <><Header />
   <div className="RecapComponent">
     <div className="container-fluid" style={{marginTop:"2em"}}>
@@ -22,6 +32,6 @@ const FailComponent: FC<FailComponentProps> = () => (
     </div>
   </div>
   <Footer />
-  </>);
+  </>)};
 
 export default FailComponent;

@@ -1,20 +1,25 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import "./PaiementPage.module.css";
 import Header from "../Header";
 import Menu from "../Menu";
-import BillingDetailsForm from "../ShippingComponent/BillingDetailsForm";
 import CheckoutForm from "../ShippingComponent/CheckoutForm";
 import PopupCheckout from "../PopupCheckout/PopupCheckout";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import configData from "../../config.json";
-import { Cookie } from "@mui/icons-material";
 import Cookies from "js-cookie";
 
 const PaiementPage: FC = () => {
   const location = useLocation();
-
   const SERVER_URL = configData.SERVER_URL;
+  let navigate = useNavigate();
+  const isCookie = Cookies.get('panier')
 
+  if (isCookie == undefined || isCookie == "[]" || isCookie == "") {
+    useEffect(() => {
+      navigate("/")
+    }, []);
+  }
+  
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(0);
   const [form, setform] = useState();
@@ -95,14 +100,11 @@ const PaiementPage: FC = () => {
     city: "Paris",
     email: "abc@gmail.com",
     phone: "0661201010",
-    additionalInfo: "",
-    cardNumber: "",
+        cardNumber: "",
     cardName: "",
     cardCvv: "",
     monthExp: "",
-    yearExp: "",
-    additionalPurchaseDetails: "",
-  };
+    yearExp: ""  };
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -116,27 +118,24 @@ const PaiementPage: FC = () => {
       postalCode: formData.get("postalCode"),
       email: formData.get("email"),
       phone: formData.get("phone"),
-      additionalInfo: formData.get("additionalInfo"),
       cardNumber: formData.get("cardNumber"),
       cardName: formData.get("cardName"),
       cardCvv: formData.get("cardCvv"),
       monthExp: formData.get("monthExp"),
-      yearExp: formData.get("yearExp"),
-      additionalPurchaseDetails: formData.get("additionalPurchaseDetails"),
-    };
+      yearExp: formData.get("yearExp")    };
     setform(data)
 
 
     setConfirmationPopupVisible(true);
   };
-  let navigate = useNavigate();
+
 
   const [isConfirmationPopupVisible, setConfirmationPopupVisible] =
     useState(false);
   const handleConfirmation = (confirmed: boolean) => {
     if (confirmed) {
       console.log(data)
-      navigate('/succesOrder',{
+      navigate('/succesOrder', {
         state: {
           form: form
         }
@@ -148,6 +147,8 @@ const PaiementPage: FC = () => {
 
     }
   };
+
+
   return (
     <div>
       <Header />
@@ -265,7 +266,7 @@ const PaiementPage: FC = () => {
                     />
                   </div>
                   <br />
-                  {/* Number input */}
+                  {/* Number input 
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="phone">
                       Phone
@@ -279,9 +280,9 @@ const PaiementPage: FC = () => {
                       onChange={handlePhoneChange}
                       required
                     />
-                  </div>
+                  </div>*/}
                   <br />
-                  {/* Message input */}
+                  {/* Message input 
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="additionalInfo">
                       Additional information
@@ -292,7 +293,7 @@ const PaiementPage: FC = () => {
                       name="additionalInfo"
                       rows={4}
                     ></textarea>
-                  </div>
+                  </div>*/}
 
                   {/* Checkbox 
               <div className="form-check d-flex justify-content-center mb-2">

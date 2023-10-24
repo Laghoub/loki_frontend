@@ -1,9 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
-import { ProductDetailsWrapper } from "./ProductDetails.styled";
+import { useEffect, useState } from "react";
 import "./ProductDetails.css";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import HomeIcon from "@mui/icons-material/Home";
-import { colors } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import MoreDetailsComponent from "../MoreDetailsComponent/MoreDetailsComponent";
 import axios from "axios";
@@ -62,7 +60,7 @@ const ProductDetails = () => {
          console.log(quantity)
       if (existingProductIndex !== -1) {
          // Si le produit existe, augmentez la quantité
-         panier[existingProductIndex].quantite+quantity;
+         panier[existingProductIndex].quantite = panier[existingProductIndex].quantite+quantity;
       } else {
          // Sinon, ajoutez un nouvel élément au panier
          console.log

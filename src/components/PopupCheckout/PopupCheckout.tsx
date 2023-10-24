@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './PopupCheckout.module.css'; // Import the CSS module
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -11,13 +11,15 @@ interface PopupCheckoutProps {
 }
 
 const PopupCheckout: FC<PopupCheckoutProps> = ({ onConfirm, onCancel, dataForm, onClose }) => {
+
   let navigate = useNavigate();
+  const isCookie = Cookies.get('panier')
 
-  const panierFromCookies = JSON.parse(Cookies.get("panier") || "[]");
-  
- const onClosePopup= () => {
-
- }
+  if(isCookie == undefined|| isCookie == "[]"|| isCookie == "" ){
+    useEffect(() => {
+      navigate("/")
+    }, []);
+  }
   return (
     <div className={styles['confirmation-popup']}>
         <button className={styles['close-button']} onClick={onClose}>
