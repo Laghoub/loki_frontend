@@ -167,16 +167,14 @@ export default function Header() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
-          >
-            
-          </IconButton>
+          ></IconButton>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-           <a href ="/">LOꓘI PHARMACEUTICS</a> 
+            <a href="/">LOꓘI PHARMACEUTICS</a>
           </Typography>
           {/* 
           <Search>
@@ -192,11 +190,9 @@ export default function Header() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link to="/panier">
-             
-                <ShoppingCartIcon style={{ color: "white" }} />
-              
+              <ShoppingCartIcon style={{ color: "white" }} />
             </Link>
-           {/* <IconButton
+            {/* <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
@@ -228,7 +224,7 @@ export default function Header() {
             >
               <MoreIcon />
             </IconButton>
-  */} 
+  */}
           </Box>
         </Toolbar>
       </AppBar>
