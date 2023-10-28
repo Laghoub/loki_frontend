@@ -18,7 +18,10 @@
     z-index: 1000;
     font-size: 20px;
   }
-  
+  .close-button{
+    margin-left: 90%;
+    color: black;
+  }
   .confirmation-buttons {
     margin-top: 20px;
   }

@@ -1,20 +1,28 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import styles from "./PaiementPage.module.css";
+import { FC, FormEvent, useEffect, useState } from "react";
+import "./PaiementPage.module.css";
 import Header from "../Header";
 import Menu from "../Menu";
-import BillingDetailsForm from "../ShippingComponent/BillingDetailsForm";
 import CheckoutForm from "../ShippingComponent/CheckoutForm";
 import PopupCheckout from "../PopupCheckout/PopupCheckout";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import configData from "../../config.json";
+import Cookies from "js-cookie";
 
 const PaiementPage: FC = () => {
   const location = useLocation();
-
   const SERVER_URL = configData.SERVER_URL;
+  let navigate = useNavigate();
+  const isCookie = Cookies.get('panier')
 
+  if (isCookie == undefined || isCookie == "[]" || isCookie == "") {
+    useEffect(() => {
+      navigate("/")
+    }, []);
+  }
+  
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(0);
+  const [form, setform] = useState();
   const handleEmailChange = (e: any) => {
     let inputValue = e.target.value;
 
@@ -44,26 +52,14 @@ const PaiementPage: FC = () => {
     }
   };
 
-  let navigate = useNavigate();
 
-  const [isConfirmationPopupVisible, setConfirmationPopupVisible] =
-    useState(false);
-  const handleConfirmation = (confirmed: boolean) => {
-    if (confirmed) {
-      console.log("Purchase confirmed");
-      navigate("/");
-    } else {
-      navigate("/");
-    }
-  };
 
   // Get the total price and add shupping fee
 
-  const [initFee, setInitFee] = useState<number | null>(null);
-  const [totalCharge, setTotalCharge] = useState<number>(0);
+  let [initFee, setInitFee] = useState<number | null>(null);
+  let [totalCharge, setTotalCharge] = useState<number>(0);
 
   const shipping_fee = configData.SHIPPING;
-
   useEffect(() => {
     if (location.state && location.state.montantTotal) {
       setInitFee(Number(location.state.montantTotal));
@@ -93,29 +89,66 @@ const PaiementPage: FC = () => {
       });
   }, [SERVER_URL]); */
   }
+  var data: any
+  var dataTest: any
+  dataTest = {
+    firstName: "Marouane",
+    lastName: "Lok",
+    company: "Uspn",
+    address: "99 av.St georges",
+    postalCode: "93220",
+    city: "Paris",
+    email: "abc@gmail.com",
+    phone: "0661201010",
+        cardNumber: "",
+    cardName: "",
+    cardCvv: "",
+    monthExp: "",
+    yearExp: ""  };
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
-    const data = {
+    data = {
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
       company: formData.get("company"),
       address: formData.get("address"),
+      city: formData.get("city"),
       postalCode: formData.get("postalCode"),
       email: formData.get("email"),
       phone: formData.get("phone"),
-      additionalInfo: formData.get("additionalInfo"),
       cardNumber: formData.get("cardNumber"),
       cardName: formData.get("cardName"),
       cardCvv: formData.get("cardCvv"),
       monthExp: formData.get("monthExp"),
-      yearExp: formData.get("yearExp"),
-      additionalPurchaseDetails: formData.get("additionalPurchaseDetails"),
-    };
+      yearExp: formData.get("yearExp")    };
+    setform(data)
+
+
     setConfirmationPopupVisible(true);
-    console.log(data);
   };
+
+
+  const [isConfirmationPopupVisible, setConfirmationPopupVisible] =
+    useState(false);
+  const handleConfirmation = (confirmed: boolean) => {
+    if (confirmed) {
+      console.log(data)
+      navigate('/succesOrder', {
+        state: {
+          form: form
+        }
+      })
+    } else {
+
+      Cookies.remove('panier')
+      navigate('/failedOrder')
+
+    }
+  };
+
+
   return (
     <div>
       <Header />
@@ -233,13 +266,13 @@ const PaiementPage: FC = () => {
                     />
                   </div>
                   <br />
-                  {/* Number input */}
+                  {/* Number input 
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="phone">
                       Phone
                     </label>
                     <input
-                      type="tel"
+                      type="number"
                       id="phone"
                       name="phone"
                       className="form-control"
@@ -247,9 +280,9 @@ const PaiementPage: FC = () => {
                       onChange={handlePhoneChange}
                       required
                     />
-                  </div>
+                  </div>*/}
                   <br />
-                  {/* Message input */}
+                  {/* Message input 
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="additionalInfo">
                       Additional information
@@ -260,7 +293,7 @@ const PaiementPage: FC = () => {
                       name="additionalInfo"
                       rows={4}
                     ></textarea>
-                  </div>
+                  </div>*/}
 
                   {/* Checkbox 
               <div className="form-check d-flex justify-content-center mb-2">
@@ -297,9 +330,6 @@ const PaiementPage: FC = () => {
                     <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                       <div>
                         <strong>Total amount</strong>
-                        <strong>
-                          <p className="mb-0">(including VAT)</p>
-                        </strong>
                       </div>
                       <span>
                         <strong> {totalCharge} €</strong>
@@ -325,6 +355,10 @@ const PaiementPage: FC = () => {
         <PopupCheckout
           onConfirm={() => handleConfirmation(true)}
           onCancel={() => handleConfirmation(false)}
+          onClose={() => setConfirmationPopupVisible(false)}
+
+          dataForm={data}
+
         />
       )}
     </div>

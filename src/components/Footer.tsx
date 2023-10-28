@@ -20,7 +20,7 @@ export default function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={5}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={9}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               About us
             </Typography>
@@ -28,7 +28,7 @@ export default function Footer() {
               We are a company that sells everyting related to medical field.
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               Contact us
             </Typography>
@@ -42,7 +42,7 @@ export default function Footer() {
               Phone: +1 234 567 8901
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+         {/* <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               Follow us
             </Typography>
@@ -59,7 +59,7 @@ export default function Footer() {
             <Link href="https://www.twitter.com/" color="inherit">
               <Twitter />
             </Link>
-          </Grid>
+          </Grid>*/} 
         </Grid>
         <Box mt={5}>
           <Typography variant="body2" color="text.secondary" align="center">

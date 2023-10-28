@@ -79,7 +79,7 @@ export default function ProductByCat() {
         console.error("Error fetching products data:", error);
         setLoading(false); // Set loading to false in case of an error
       });
-  });
+  },[]);
   useEffect(() => {
     axios
       .get(`${SERVER_URL}/products`)
@@ -91,7 +91,7 @@ export default function ProductByCat() {
         console.error("Error fetching products data:", error);
         setLoading(false); // Set loading to false in case of an error
       });
-  });
+  },[]);
 
   return (
     <Box sx={{ width: "100%" }}>

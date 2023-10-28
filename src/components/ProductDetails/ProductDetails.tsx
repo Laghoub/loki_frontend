@@ -1,9 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
-import { ProductDetailsWrapper } from "./ProductDetails.styled";
+import { useEffect, useState } from "react";
 import "./ProductDetails.css";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import HomeIcon from "@mui/icons-material/Home";
-import { colors } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import MoreDetailsComponent from "../MoreDetailsComponent/MoreDetailsComponent";
 import axios from "axios";
@@ -13,7 +11,7 @@ import Header from "../Header";
 import Footer from "../Footer";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import uboprofene from "../../assets/ibuprofene.png"
+import uboprofene from "../../assets/No_image_available.png"
 
 
 
@@ -62,7 +60,7 @@ const ProductDetails = () => {
          console.log(quantity)
       if (existingProductIndex !== -1) {
          // Si le produit existe, augmentez la quantité
-         panier[existingProductIndex].quantite+quantity;
+         panier[existingProductIndex].quantite = panier[existingProductIndex].quantite+quantity;
       } else {
          // Sinon, ajoutez un nouvel élément au panier
          console.log
@@ -158,7 +156,7 @@ if (productQuantity > 50) {
 
                         <div className="row">
                            <div className="col-lg-9 pull-right hidden-xs hidden-sm hidden-md text-center">
-                              <img width="800" height="800" id="productZoom" src={productData.image} />
+                              <img width="800" height="800" id="productZoom" src={uboprofene} />
                            </div>
 
 
@@ -186,7 +184,7 @@ if (productQuantity > 50) {
                         <ul className="list-unstyled product-section">
                            <li>
                               <strong>Brand:</strong>
-                              <a href={`./${productData.brand}`}>{productData.brand}</a>
+                              <a >{productData.brand}</a>
                            </li>
                            <li>
                               <strong>Product Code:</strong>

@@ -1,7 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { MoreDetailsComponentWrapper } from './MoreDetailsComponent.styled';
-import CheckIcon from '@mui/icons-material/Check';
-import axios from 'axios'; // Importez Axios
 
 interface MoreDetailsComponentProps {
    productDesc: String; 
