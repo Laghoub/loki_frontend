@@ -17,8 +17,44 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "../App.css";
 import logo from "../assets/logo.jpg";
 import { BorderColor } from "@mui/icons-material";
+import axios from "axios";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 const Login = () => {
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/api/authenticate",
+        formData
+      );
+
+      // Si l'authentification réussit, vous pouvez rediriger l'utilisateur vers la page d'accueil
+      // ou effectuer d'autres actions, par exemple, stocker le jeton JWT.
+      console.log("Authentification réussie : ", response.data);
+
+      // Effacez les données du formulaire après une connexion réussie
+      setFormData({ username: "", password: "" });
+
+      // Redirigez l'utilisateur vers la page d'accueil (remplacez /home par l'URL de votre choix)
+      window.location.href = "/";
+    } catch (error) {
+      // Si l'authentification échoue, affichez un message d'erreur
+      console.error("Erreur d'authentification : ", error);
+      setError("The login informations are incorrect.");
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -39,16 +75,20 @@ const Login = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
+
+        {error && <div style={{ color: "red" }}>{error}</div>}
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="username"
+            name="username"
+            autoComplete="username"
             autoFocus
+            value={formData.username}
+            onChange={handleChange}
           />
           <TextField
             margin="normal"
@@ -59,6 +99,8 @@ const Login = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={formData.password}
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
