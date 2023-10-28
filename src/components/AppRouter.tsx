@@ -16,7 +16,7 @@ import EmptyPanier from "./EmptyPanier";
 
 const AppRouter = () => {
   const panierCookie = true;
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <BrowserRouter>
