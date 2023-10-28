@@ -17,6 +17,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,6 +61,49 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const defaultUserData = {
+    id: "",
+    login: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    imageUrl: "",
+    activated: "",
+    langKey: "",
+    createdBy: "",
+    createdDate: "",
+    lastModifiedBy: "",
+    lastModifiedDate: "",
+    authorities: [],
+  };
+  const [userData, setUserData] = useState(defaultUserData);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8081/api/account", {
+          headers: {
+            Authorization:
+              "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTY5ODYxMDU1OH0.wpatL5qUxf3698gOhBknZ_IYSOCcTTWc5Azn2Dg0qqGD-UhH1TI_Hoz9DUU6ie-fNeaALc2LmhF2DVmSV62-5A",
+          },
+        });
+
+        console.log(token);
+
+        setUserData(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des données de l'utilisateur : ",
+          error
+        );
+      }
+    };
+
+    // Appelez la fonction pour récupérer les données lorsque le composant est monté
+    fetchUserData();
+  }, []);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -189,11 +234,26 @@ export default function Header() {
               inputProps={{ "aria-label": "search" }}
             />
   </Search> */}
+
           <Box sx={{ flexGrow: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            padding={2}
+            sx={{ display: { xs: "none", sm: "flex" } }}
+          >
+            {userData ? (
+              <p>{userData.firstName + " " + userData.lastName}</p>
+            ) : (
+              <p></p>
+            )}
+          </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link to="/panier">
               <ShoppingCartIcon style={{ color: "white" }} />
             </Link>
+
             {/* <IconButton
               size="large"
               aria-label="show 17 new notifications"

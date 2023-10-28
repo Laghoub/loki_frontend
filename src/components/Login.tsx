@@ -41,10 +41,12 @@ const Login = () => {
 
       // Si l'authentification réussit, vous pouvez rediriger l'utilisateur vers la page d'accueil
       // ou effectuer d'autres actions, par exemple, stocker le jeton JWT.
-      console.log("Authentification réussie : ", response.data);
+      console.log("Authentification réussie : ", response.data.id_token);
+      localStorage.setItem("token", response.data.id_token);
 
       // Effacez les données du formulaire après une connexion réussie
       setFormData({ username: "", password: "" });
+      localStorage.setItem("connected", "true");
 
       // Redirigez l'utilisateur vers la page d'accueil (remplacez /home par l'URL de votre choix)
       window.location.href = "/";

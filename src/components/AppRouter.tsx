@@ -15,8 +15,11 @@ import Panier from "./Panier";
 import EmptyPanier from "./EmptyPanier";
 
 const AppRouter = () => {
-  const panierCookie = true;
-  const isLoggedIn = false;
+  const panierCookie = Cookies.get("panier");
+  var isLoggedIn = false;
+  if (localStorage.getItem("connected") === "true") {
+    isLoggedIn = true;
+  }
 
   return (
     <BrowserRouter>
