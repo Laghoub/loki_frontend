@@ -26,7 +26,7 @@ const EmptyPanier = () => {
           You have no products in your cart
         </Typography>
         <Typography variant="body1" align="center" color="textSecondary">
-          Create or log in to your account
+          Log in to your account
         </Typography>
         <Box mt={2}>
           {" "}
@@ -41,14 +41,14 @@ const EmptyPanier = () => {
               Log In
             </Button>
 
-            <Button
+            {/*<Button
               variant="contained"
               style={{ backgroundColor: "#98d648" }} // Couleur verte
               component={Link}
               to="/register" // Lien vers la page d'inscription
             >
               Sign In
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       </Container>
