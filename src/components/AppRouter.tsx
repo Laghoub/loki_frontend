@@ -13,6 +13,10 @@ import FailComponent from "./FailComponent/FailComponent";
 import RecapComponent from "./recapComponent/RecapComponent";
 import Panier from "./Panier";
 import EmptyPanier from "./EmptyPanier";
+import AdminDash from "./adminDash/AdminDash";
+import Error404 from "./Error404";
+import Orders from "./Orders/Orders";
+
 
 const AppRouter = () => {
   const panierCookie = Cookies.get("panier");
@@ -55,10 +59,17 @@ const AppRouter = () => {
             />
           }
         />
-        {/* Conditionally render the RecapComponent route based on the presence of the cookie */}
-        <Route path="/succesOrder" element={<RecapComponent />} />
+        <Route path="/succesOrder" element={ <RecapComponent />} />
+        
+          <Route path="/failedOrder" element={<FailComponent />} />
+      
 
-        <Route path="/failedOrder" element={<FailComponent />} />
+        <Route path="/Checkout" element={ <PaiementPage />} />
+        <Route path="/admin" element={ <AdminDash />} />
+       
+
+        <Route path="*" element={<Error404 />} />
+
 
         <Route path="/Checkout" element={<PaiementPage />} />
       </Routes>
