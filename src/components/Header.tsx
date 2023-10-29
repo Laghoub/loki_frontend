@@ -81,17 +81,18 @@ export default function Header() {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      console.log(token);
       try {
         const response = await axios.get("http://localhost:8081/api/account", {
           headers: {
-            Authorization:
-              "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTY5ODYxMDU1OH0.wpatL5qUxf3698gOhBknZ_IYSOCcTTWc5Azn2Dg0qqGD-UhH1TI_Hoz9DUU6ie-fNeaALc2LmhF2DVmSV62-5A",
+            Authorization: `Bearer ${token}`,
           },
         });
 
         console.log(token);
 
         setUserData(response.data);
+        localStorage.setItem("idUser", response.data.id);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données de l'utilisateur : ",
