@@ -16,7 +16,7 @@ export default function CardProduct(props: any) {
   const SERVER_URL = config.SERVER_URL;
 
   return (
-    <Card sx={{ maxWidth: 200 }}>
+    <Card sx={{ maxWidth: 200,height: "fit-content",textAlign:"center"  }}>
       <CardMedia sx={{ height: 120 }} image={pharma1} title={props.nom} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -25,7 +25,6 @@ export default function CardProduct(props: any) {
        
       </CardContent>
       <CardActions>
-        <Button size="small" disabled>Buy</Button>
         <Link to={`/Details/${props.id}`} ><Button  style={{color:'#1976d2'}} size="small">Details</Button></Link>
       </CardActions>
     </Card>
