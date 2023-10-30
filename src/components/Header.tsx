@@ -16,7 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -78,7 +78,13 @@ export default function Header() {
   };
   const [userData, setUserData] = useState(defaultUserData);
   const token = localStorage.getItem("token");
+  let navigate = useNavigate();
 
+  const logout = () => {
+    localStorage.setItem("connected","false")
+   console.log(localStorage.getItem("connected"))
+   navigate('/')
+  }
   useEffect(() => {
     const fetchUserData = async () => {
       console.log(token);
@@ -246,10 +252,10 @@ export default function Header() {
             padding={2}
             sx={{ display: { xs: "none", sm: "flex" } }}
           >
-            {userData ? (
-              <p>{userData.firstName + " " + userData.lastName}</p>
+            {localStorage.getItem("connected")=="true" ? (
+              <a onClick={logout} style={{    marginBottom: "0.1em",cursor:'pointer'}}>Log out</a>
             ) : (
-              <p></p>
+              <Link to="/login"><p style={{    marginBottom: "0.1em"}}>Log in</p></Link>
             )}
           </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

@@ -64,9 +64,9 @@ const AppRouter = () => {
       
 
         <Route path="/Checkout" element={ <PaiementPage />} />
-     {/*  <Route path="/admin" element={ <AdminDash />} />
+       <Route path="/admin" element={ <AdminDash />} />
              <Route path="/register" element={<Register />} />
-*/}  
+  
        
 
         <Route path="*" element={<Error404 />} />

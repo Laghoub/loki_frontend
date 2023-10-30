@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import './failComponent.module.css';
 import Header from '../Header';
 import dislike from '../../assets/emojidislike.png'
 import Footer from '../Footer';

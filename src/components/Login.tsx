@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
 import reactLogo from "./assets/react.svg";
 import Avatar from "@mui/material/Avatar";
@@ -20,6 +20,7 @@ import { BorderColor } from "@mui/icons-material";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -47,7 +48,7 @@ const Login = () => {
       // Effacez les données du formulaire après une connexion réussie
       setFormData({ username: "", password: "" });
       localStorage.setItem("connected", "true");
-
+      localStorage.getItem("conncted")
       // Redirigez l'utilisateur vers la page d'accueil (remplacez /home par l'URL de votre choix)
       window.location.href = "/";
     } catch (error) {
@@ -56,8 +57,17 @@ const Login = () => {
       setError("The login informations are incorrect.");
     }
   };
+  let navigate = useNavigate();
+
+  if(localStorage.getItem("connected") == "true" ){
+    console.log(localStorage.getItem("connected"))
+    useEffect(() => {
+      navigate("/")
+    }, []);
+  }
 
   return (
+    
     <Container component="main" maxWidth="xs">
       <CssBaseline />
 
