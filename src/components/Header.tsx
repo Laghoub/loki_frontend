@@ -102,7 +102,9 @@ export default function Header() {
     };
 
     // Appelez la fonction pour récupérer les données lorsque le composant est monté
-    fetchUserData();
+    if (localStorage.getItem("connected") === "true") {
+      fetchUserData();
+    }
   }, []);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -123,6 +125,7 @@ export default function Header() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    localStorage.removeItem("connected");
   };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -146,7 +149,7 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>deconnexion</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -255,7 +258,7 @@ export default function Header() {
               <ShoppingCartIcon style={{ color: "white" }} />
             </Link>
 
-            {/* <IconButton
+            <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
@@ -287,7 +290,6 @@ export default function Header() {
             >
               <MoreIcon />
             </IconButton>
-  */}
           </Box>
         </Toolbar>
       </AppBar>
