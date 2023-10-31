@@ -22,21 +22,21 @@ import configData from "../config.json";
 import EmptyPanier from "./EmptyPanier";
 
 const Panier = () => {
+  var isLoggedIn = false;
   const livraisonExpressValue = configData.SHIPPINGEXPRESS;
   const [livraisonExpress, setLivraisonExpress] = useState(false);
   const [panier, setPanier] = useState([]); // Utilisez un état pour stocker les produits du panier
   const navigate = useNavigate();
   const [seed, setSeed] = useState(1);
   const reset = () => {
-       setSeed(Math.random());
-   }
+    setSeed(Math.random());
+  };
   var isPanier = false;
   var panierCook = Cookies.get("panier");
   if (panierCook != null || panierCook != "[]") {
-    isPanier = true
-    
+    isPanier = true;
   }
-  if (panierCook == "[]" || panierCook == undefined){
+  if (panierCook == "[]" || panierCook == undefined) {
   }
 
   const updateQuantite = (nom: String, nouvelleQuantite: Float32Array) => {
@@ -47,7 +47,6 @@ const Panier = () => {
           ? { ...produit, quantite: nouvelleQuantite }
           : produit
       )
-     
     );
 
     // Mise à jour des cookies avec les nouvelles quantités
@@ -61,13 +60,12 @@ const Panier = () => {
         return produit;
       });
       Cookies.set("panier", JSON.stringify(nouveauPanierJSON), { expires: 7 });
-    } 
-    if (panierCook == "[]"|| panierCook == undefined){
-      Cookies.remove("panier")
-      
     }
-    
-    reset()
+    if (panierCook == "[]" || panierCook == undefined) {
+      Cookies.remove("panier");
+    }
+
+    reset();
   };
 
   const supprimerProduit = (nom: string) => {
@@ -85,22 +83,24 @@ const Panier = () => {
       );
       Cookies.set("panier", JSON.stringify(nouveauPanierJSON), { expires: 7 });
     }
-    if (panierDansCookies == "[]"){
-      Cookies.remove("panier")
+    if (panierDansCookies == "[]") {
+      Cookies.remove("panier");
     }
-    reset()
+    reset();
   };
 
   useEffect(() => {
     const panierFromCookies = JSON.parse(Cookies.get("panier") || "[]");
-
+    if (localStorage.getItem("connected") === "true") {
+      isLoggedIn = true;
+    }
     if (panierFromCookies.length == "[]") {
       // Les cookies sont vides, redirigez vers la page "EmptyPanier"
       Cookies.remove("panier");
-      reset()
+      reset();
     } else {
       setPanier(panierFromCookies);
-      reset()
+      reset();
     }
   }, [navigate]);
   // Récupérez le panier depuis les cookies
@@ -110,7 +110,7 @@ const Panier = () => {
     navigate("/Checkout", {
       state: { montantTotal: montantAvecLivraison.toFixed(2) },
     });
-    reset()
+    reset();
   };
 
   const montantTotal = panier.reduce(
@@ -124,9 +124,8 @@ const Panier = () => {
 
   return (
     <div>
-      {isPanier && (
+      {localStorage.getItem("connected") === "true" && (
         <>
-
           <CssBaseline />
           <Header />
           <Menu />
@@ -168,9 +167,11 @@ const Panier = () => {
                             />
                           </Grid>
                           <Grid item xs={3}>
-                            <Typography variant="subtitle1" >
+                            <Typography variant="subtitle1">
                               {"Total price " +
-                                (produit.prix * produit.quantite).toFixed(2)}{" "}
+                                (produit.prix * produit.quantite).toFixed(
+                                  2
+                                )}{" "}
                               €
                             </Typography>
                             <div>
@@ -231,9 +232,11 @@ const Panier = () => {
                     <Button
                       variant="contained"
                       style={{
-                        backgroundColor:montantAvecLivraison ==0?'rgb(200 200 200)' : "#4CAF50", // Couleur verte
+                        backgroundColor:
+                          montantAvecLivraison == 0
+                            ? "rgb(200 200 200)"
+                            : "#4CAF50", // Couleur verte
                         color: "#fff",
-
                       }}
                       onClick={removeCok}
                       disabled={montantAvecLivraison == 0}
@@ -248,8 +251,7 @@ const Panier = () => {
           </div>
         </>
       )}
-      {!isPanier && (<EmptyPanier />)}
-
+      {localStorage.getItem("connected") != "true" && <EmptyPanier />}
     </div>
   );
 };
