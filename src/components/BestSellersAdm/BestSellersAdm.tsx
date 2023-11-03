@@ -8,11 +8,11 @@ const BestSellersAdm: FC<BestSellersAdmProps> = () => {
 
   const SERVER_URL = configData.SERVER_URL;
   type ProductType = {
-    id: String;
-    reference: String;
-    name: String;
-    nbrOfSells:String;
-    weightedAveragePrice:String;
+    id: number;
+    reference: string;
+    name: string;
+    nbrOfSells:string;
+    weightedAveragePrice:string;
   };
   const [value, setValue] = React.useState(0);
   const [bestproducts, setBestProducts] = useState([] as ProductType[]);
@@ -66,44 +66,33 @@ const BestSellersAdm: FC<BestSellersAdmProps> = () => {
               <div className="app-card app-card-orders-table shadow-sm mb-5">
                 <div className="app-card-body">
                   <div className="table-responsive">
-                    <table className="table app-table-hover mb-0 text-left">
-                      <thead>
-                        <tr>
-                          <th className="cell">Order</th>
-                          <th className="cell">Product</th>
-                          <th className="cell">Customer</th>
-                          <th className="cell">Date</th>
-                          <th className="cell">Status</th>
-                          <th className="cell">Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td className="cell">#15346</td>
-                          <td className="cell"><span className="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                          <td className="cell">John Sanders</td>
-                          <td className="cell"><span>17 Oct</span><span className="note">2:16 PM</span></td>
-                          <td className="cell"><span className="badge bg-success">Paid</span></td>
-                          <td className="cell">$259.35</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <table className="table app-table-hover mb-0 text-left">
+                  <thead>
+                    <tr>
+                      <th className="cell">ID</th>
+                      <th className="cell">Reference</th>
+                      <th className="cell">Product Name</th>
+                       <th className="cell">Weighted Average Price</th>
+                      <th className="cell">Number of Sells</th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bestproducts.map((product) => (
+                      <tr key={product.id}>
+                        <td className="cell">{product.id}</td>
+                        <td className="cell">{product.reference}</td>
+                        <td className="cell">{product.name}</td>
+                        <td className="cell">{product.weightedAveragePrice} €</td>
+                        <td className="cell">{product.nbrOfSells}</td>
+                        
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
                   </div>
                 </div>
               </div>
-              <nav className="app-pagination">
-                <ul className="pagination justify-content-center">
-                  <li className="page-item disabled">
-                    <a className="page-link" href="#" tabIndex={-1} aria-disabled="true">Previous</a>
-                  </li>
-                  <li className="page-item active"><a className="page-link" href="#">1</a></li>
-                  <li className="page-item"><a className="page-link" href="#">2</a></li>
-                  <li className="page-item"><a className="page-link" href="#">3</a></li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">Next</a>
-                  </li>
-                </ul>
-              </nav>
             </div>
 
           </div>
