@@ -41,14 +41,14 @@ const EmptyPanier = () => {
               Log In
             </Button>
 
-            {/*<Button
+            <Button
               variant="contained"
               style={{ backgroundColor: "#98d648" }} // Couleur verte
               component={Link}
               to="/register" // Lien vers la page d'inscription
             >
               Sign In
-            </Button> */}
+            </Button>
           </Box>
         </Box>
       </Container>

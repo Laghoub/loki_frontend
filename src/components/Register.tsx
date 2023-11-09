@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import logo from "../assets/logo.jpg";
 import { useState } from "react";
 import axios from "axios";
+import Alert from "@mui/material/Alert";
 
 function Copyright(props: any) {
   return (
@@ -36,7 +37,6 @@ function Copyright(props: any) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignUp() {
@@ -50,16 +50,32 @@ export default function SignUp() {
   };
 
   const [formData, setFormData] = useState(defaultFormData);
+  const [validationErrors, setValidationErrors] = useState({
+    email: false,
+    phone: false,
+  });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+    setValidationErrors({ ...validationErrors, [name]: false });
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setValidationErrors({ ...validationErrors, email: true });
+      return;
+    }
+
+    if (formData.phone.length !== 10 || !/^\d+$/.test(formData.phone)) {
+      setValidationErrors({ ...validationErrors, phone: true });
+      return;
+    }
 
     try {
       const response = await axios.post("http://localhost:8081/api/register", {
@@ -73,16 +89,14 @@ export default function SignUp() {
         authorities: ["ROLE_Client"],
       });
 
-      // Gérez ici le succès de l'inscription.
-      console.log("Inscription réussie : ", response.data);
       setSuccess(
         "Your registration has been successfully completed. Please access your email address to validate your account."
       );
       setFormData(defaultFormData);
+      setValidationErrors({ email: false, phone: false });
     } catch (error) {
-      // Gérez les erreurs ici.
-      console.error("Erreur lors de l'inscription : ", error);
-      setError("Une erreur s'est produite lors de l'inscription.");
+      console.error("Error during registration: ", error);
+      setError("An error occurred during registration.");
     }
   };
 
@@ -100,7 +114,7 @@ export default function SignUp() {
         >
           <img
             src={logo}
-            alt="Votre Image"
+            alt="Your Image"
             style={{ width: "80px", height: "80px" }}
           />
           <Typography component="h1" variant="h5">
@@ -110,7 +124,7 @@ export default function SignUp() {
             <Grid item xs={12} sm={6}>
               <Card
                 sx={{
-                  backgroundColor: "#98d648", // Couleur verte
+                  backgroundColor: "#98d648",
                   maxWidth: "100%",
                   marginBottom: "8px",
                   fontSize: "16",
@@ -122,6 +136,7 @@ export default function SignUp() {
               </Card>
             </Grid>
           )}
+          {error && <Alert severity="error">{error}</Alert>}
           <Box
             component="form"
             noValidate
@@ -164,29 +179,35 @@ export default function SignUp() {
                   autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
+                  error={validationErrors.email}
+                  helperText={
+                    validationErrors.email ? "Invalid email format" : ""
+                  }
                 />
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="phone"
-                  label="phone number"
+                  label="Phone Number"
                   name="phone"
-                  autoComplete="email"
+                  autoComplete="tel"
                   value={formData.phone}
                   onChange={handleChange}
+                  error={validationErrors.phone}
+                  helperText={
+                    validationErrors.phone ? "Invalid phone number" : ""
+                  }
                 />
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   name="username"
-                  label="username"
-                  type="username"
+                  label="Username"
+                  type="text"
                   id="username"
                   autoComplete="username"
                   value={formData.username}
