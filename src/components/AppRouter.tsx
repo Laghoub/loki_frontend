@@ -16,6 +16,9 @@ import EmptyPanier from "./EmptyPanier";
 import AdminDash from "./adminDash/AdminDash";
 import Error404 from "./Error404";
 import Orders from "./Orders/Orders";
+import BestSellersAdm from "./BestSellersAdm/BestSellersAdm";
+import AddProduct from "./AddProduct/AddProduct";
+import AddCategorie from "./AddCategorie/AddCategorie";
 
 
 const AppRouter = () => {
@@ -33,7 +36,7 @@ const AppRouter = () => {
         <Route path="/" element={<HomePage />} />
         <Route
           path="/panier"
-          element={isLoggedIn && panierCookie ? <Panier /> : <EmptyPanier />}
+          element={<Panier />}
         />
 
         <Route path="/emptyCart" element={<EmptyPanier />} />
@@ -58,16 +61,18 @@ const AppRouter = () => {
             />
           }
         />
-        <Route path="/succesOrder" element={ <RecapComponent />} />
-        
-          <Route path="/failedOrder" element={<FailComponent />} />
-      
+        <Route path="/succesOrder" element={<RecapComponent />} />
 
-        <Route path="/Checkout" element={ <PaiementPage />} />
-       <Route path="/admin" element={ <AdminDash />} />
-             <Route path="/register" element={<Register />} />
-  
-       
+        <Route path="/failedOrder" element={<FailComponent />} />
+
+
+        <Route path="/Checkout" element={<PaiementPage />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/admin/dash" element={<AdminDash />} />
+
+        <Route path="/admin/addProduct" element={<AddProduct />} />
+        <Route path="/admin/addCategory" element={<AddCategorie />} />
 
         <Route path="*" element={<Error404 />} />
 

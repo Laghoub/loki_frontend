@@ -167,7 +167,7 @@ const PaiementPage: FC = () => {
                     <div className="col">
                       <div className="form-outline">
                         <label className="form-label" htmlFor="firstName">
-                          First name
+                          First name*
                         </label>
                         <input
                           type="text"
@@ -183,7 +183,7 @@ const PaiementPage: FC = () => {
                     <div className="col">
                       <div className="form-outline">
                         <label className="form-label" htmlFor="lastName">
-                          Last name
+                          Last name*
                         </label>
                         <input
                           type="text"
@@ -214,7 +214,7 @@ const PaiementPage: FC = () => {
                   {/* Text input */}
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="address">
-                      Address
+                      Address*
                     </label>
                     <input
                       type="text"
@@ -228,7 +228,7 @@ const PaiementPage: FC = () => {
                   <div className="form-outline mb-6 row">
                     <div className="col-md-2">
                       <label className="form-label" htmlFor="postalCode">
-                        Postal Code
+                        Postal Code*
                       </label>
                       <input
                         type="number"
@@ -240,7 +240,7 @@ const PaiementPage: FC = () => {
                     </div>
                     <div className="col-md-6">
                       <label className="form-label" htmlFor="city">
-                        City
+                        City*
                       </label>
                       <input
                         type="text"

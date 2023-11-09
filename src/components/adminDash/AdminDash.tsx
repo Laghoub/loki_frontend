@@ -48,24 +48,23 @@ const AdminDash: FC<AdminDashProps> = () => (
                 </a></Link>
               </li>
               <li className="nav-item has-submenu">
-                <a className="nav-link submenu-toggle"  data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+                     <a className="nav-link submenu-toggle"  data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1" style={{fontWeight: "500"}}>
                   <span className="nav-icon">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-files" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       {/* SVG path here */}
                     </svg>
                   </span>
-                  <span className="nav-link-text">Manage Products</span>
+                  <span className="nav-link-text" style={{cursor:'pointer'}}>Manage Products</span>
                   <span className="submenu-arrow">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       {/* SVG path here */}
                     </svg>
                   </span>
                 </a>
-                <div id="submenu-1" className="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
+                <div id="submenu-1" className="collapse submenu submenu-1" data-bs-parent="#menu-accordion" style={{fontWeight: "500",paddingLeft:" 1.5em"}}>
                   <ul className="submenu-list list-unstyled">
-                    <li className="submenu-item"><a className="submenu-link">Add Product</a></li>
-                    <li className="submenu-item"><a className="submenu-link">Add categorie</a></li>
-                    <li className="submenu-item"><a className="submenu-link">Delete Product</a></li>
+                    <li className="submenu-item"><Link to='/admin/addProduct'><a className="submenu-link nav-link ">Add Product</a></Link></li>
+                    <li className="submenu-item"><Link to='/admin/addCategory' ><a className="submenu-link  nav-link ">Add Categorie</a></Link></li>
                   </ul>
                 </div>
               </li>
