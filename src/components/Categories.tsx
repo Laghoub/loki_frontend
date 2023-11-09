@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useState, ReactNode, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Ajout de l'import
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -26,11 +27,11 @@ export default function Categorie() {
       .get(`${SERVER_URL}/product-categories`)
       .then((response) => {
         setCategories(response.data);
-        setLoading(false); // Set loading to false once data is loaded
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching categories data:", error);
-        setLoading(false); // Set loading to false in case of an error
+        setLoading(false);
       });
   }, []);
 
@@ -51,7 +52,9 @@ export default function Categorie() {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {categorie.name}
+                <Link to={`/products/category/${categorie.id}`}>
+                  {categorie.name}
+                </Link>
               </TableCell>
             </TableRow>
           ))}

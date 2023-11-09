@@ -19,7 +19,8 @@ import Orders from "./Orders/Orders";
 import BestSellersAdm from "./BestSellersAdm/BestSellersAdm";
 import AddProduct from "./AddProduct/AddProduct";
 import AddCategorie from "./AddCategorie/AddCategorie";
-
+import ProductsByCategory from "./ProductsByCategory";
+import ProductsCatPage from "./ProductsCatPage";
 
 const AppRouter = () => {
   const panierCookie = Cookies.get("panier");
@@ -34,13 +35,14 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
 
         <Route path="/" element={<HomePage />} />
-        <Route
-          path="/panier"
-          element={<Panier />}
-        />
+        <Route path="/panier" element={<Panier />} />
 
         <Route path="/emptyCart" element={<EmptyPanier />} />
         <Route path="/details/:id" element={<ProductDetails />} />
+        <Route
+          path="/products/category/:categoryId"
+          element={<ProductsCatPage />}
+        />
 
         <Route path="/Checkout" element={<PaiementPage />} />
 
@@ -65,7 +67,6 @@ const AppRouter = () => {
 
         <Route path="/failedOrder" element={<FailComponent />} />
 
-
         <Route path="/Checkout" element={<PaiementPage />} />
         <Route path="/register" element={<Register />} />
 
@@ -75,7 +76,6 @@ const AppRouter = () => {
         <Route path="/admin/addCategory" element={<AddCategorie />} />
 
         <Route path="*" element={<Error404 />} />
-
 
         <Route path="/Checkout" element={<PaiementPage />} />
       </Routes>
