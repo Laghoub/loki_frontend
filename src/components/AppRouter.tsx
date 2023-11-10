@@ -74,6 +74,8 @@ const AppRouter = () => {
 
         <Route path="/admin/addProduct" element={<AddProduct />} />
         <Route path="/admin/addCategory" element={<AddCategorie />} />
+        <Route path="/admin/recentOrders" element={<Orders />} />
+
 
         <Route path="*" element={<Error404 />} />
 

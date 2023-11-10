@@ -128,7 +128,7 @@ const AddProduct: FC<AddProductProps> = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to='/orders'> <a className="nav-link" >
+                  <Link to='/admin/recentOrders'> <a className="nav-link" >
                     <span className="nav-icon">
                       <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         {/* SVG path here */}
@@ -154,7 +154,7 @@ const AddProduct: FC<AddProductProps> = () => {
                 <div id="submenu-1" className=" submenu submenu-1 nav-item" data-bs-parent="#menu-accordion" style={{ fontWeight: "500",   paddingLeft:" 1.5em"}}>
                   <ul className="submenu-list list-unstyled">
                     <li className="submenu-item"><Link to='/admin/addProduct' style={{width:"100%"}}><a className="submenu-link nav-link active">Add Product</a></Link></li>
-                    <li className="submenu-item"><Link to='/admin/addCategory' ><a className="submenu-link  nav-link ">Add Categorie</a></Link></li>
+                    <li className="submenu-item"><Link to='/admin/addCategory' ><a className="submenu-link  nav-link ">Add Category</a></Link></li>
                   </ul>
                 </div>
               </li>

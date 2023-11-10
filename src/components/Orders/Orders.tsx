@@ -27,44 +27,47 @@ const Orders: FC<OrdersProps> = () => (
           <nav id="app-nav-main" className="app-nav app-nav-main flex-grow-1">
             <ul className="app-menu list-unstyled accordion" id="menu-accordion">
               <li className="nav-item">
-              <Link to="/admin"> <a className="nav-link " >
-                  <span className="nav-icon">
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      {/* SVG path here */}
-                    </svg>
-                  </span>
-                  <span className="nav-link-text">Overview</span>
-                </a></Link> 
+                <Link to='/admin/dash'>
+                  <a className="nav-link ">
+                    <span className="nav-icon">
+                      <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        {/* SVG path here */}
+                      </svg>
+                    </span>
+                    <span className="nav-link-text">Overview</span>
+                  </a>
+                </Link>
               </li>
-              <li className="nav-item">
-                <a className="nav-link active">
-                  <span className="nav-icon">
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      {/* SVG path here */}
-                    </svg>
-                  </span>
-                  <span className="nav-link-text">Orders</span>
-                </a>
+              <li className="nav-item ">
+                <Link to='/admin/recentOrders' style={{width:"100%"}}>
+                <a className="nav-link active ">
+                    <span className="nav-icon">
+                      <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        {/* SVG path here */}
+                      </svg>
+                    </span>
+                    <span className="nav-link-text">Orders</span>
+                  </a>
+                  </Link>
               </li>
               <li className="nav-item has-submenu">
-                <a className="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+                <a className="nav-link submenu-toggle" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1" style={{ fontWeight: "500" }}>
                   <span className="nav-icon">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-files" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       {/* SVG path here */}
                     </svg>
                   </span>
-                  <span className="nav-link-text">Manage Products</span>
+                  <span className="nav-link-text" style={{ cursor: 'pointer' }}>Manage Products</span>
                   <span className="submenu-arrow">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       {/* SVG path here */}
                     </svg>
                   </span>
                 </a>
-                <div id="submenu-1" className="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
+                <div id="submenu-1" className="collapse submenu submenu-1" data-bs-parent="#menu-accordion" style={{ fontWeight: "500", paddingLeft: " 1.5em" }}>
                   <ul className="submenu-list list-unstyled">
-                    <li className="submenu-item"><a className="submenu-link">Add Product</a></li>
-                    <li className="submenu-item"><a className="submenu-link">Add categorie</a></li>
-                    <li className="submenu-item"><a className="submenu-link">Delete Product</a></li>
+                    <li className="submenu-item"><Link to='/admin/addProduct'><a className="submenu-link nav-link ">Add Product</a></Link></li>
+                    <li className="submenu-item"><Link to='/admin/addCategory' ><a className="submenu-link  nav-link ">Add Category</a></Link></li>
                   </ul>
                 </div>
               </li>
@@ -90,6 +93,7 @@ const Orders: FC<OrdersProps> = () => (
 
       </div>
 
+
     </div>
     <div className="app-wraper">
       <div className="app-wrapper">
@@ -97,7 +101,7 @@ const Orders: FC<OrdersProps> = () => (
           <div className="container-xl">
             <div className="row g-3 mb-4 align-items-center justify-content-between">
               <div className="col-auto">
-                <h1 className="app-page-title mb-0">Orders</h1>
+                <h1 className="app-page-title mb-0">Recent orders</h1>
               </div>
 
 
@@ -151,19 +155,6 @@ const Orders: FC<OrdersProps> = () => (
                     </div>
                   </div>
                 </div>
-                <nav className="app-pagination">
-                  <ul className="pagination justify-content-center">
-                    <li className="page-item disabled">
-                      <a className="page-link" href="#" tabIndex={-1} aria-disabled="true">Previous</a>
-                    </li>
-                    <li className="page-item active"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                    <li className="page-item">
-                      <a className="page-link" href="#">Next</a>
-                    </li>
-                  </ul>
-                </nav>
               </div>
 
             </div>
@@ -171,7 +162,7 @@ const Orders: FC<OrdersProps> = () => (
         </div>
       </div>
     </div>
-  </div>
+  </div >
 
 );
 

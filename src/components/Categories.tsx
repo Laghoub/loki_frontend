@@ -37,6 +37,7 @@ export default function Categorie() {
 
   return (
     <TableContainer component={Paper}>
+      
       <Table sx={{}} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -52,7 +53,7 @@ export default function Categorie() {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                <Link to={`/products/category/${categorie.id}`}>
+                <Link to={`/products/category/${categorie.id}`} style={{color:"black"}}>
                   {categorie.name}
                 </Link>
               </TableCell>

@@ -28,7 +28,7 @@ const AdminDash: FC<AdminDashProps> = () => (
           <nav id="app-nav-main" className="app-nav app-nav-main flex-grow-1">
             <ul className="app-menu list-unstyled accordion" id="menu-accordion">
               <li className="nav-item">
-                <a className="nav-link active" href="index.html">
+                <a className="nav-link active" >
                   <span className="nav-icon">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       {/* SVG path here */}
@@ -38,7 +38,7 @@ const AdminDash: FC<AdminDashProps> = () => (
                 </a>
               </li>
               <li className="nav-item">
-               <Link to='/orders'> <a className="nav-link" >
+               <Link to='/admin/recentOrders'> <a className="nav-link" >
                   <span className="nav-icon">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       {/* SVG path here */}
@@ -64,7 +64,7 @@ const AdminDash: FC<AdminDashProps> = () => (
                 <div id="submenu-1" className="collapse submenu submenu-1" data-bs-parent="#menu-accordion" style={{fontWeight: "500",paddingLeft:" 1.5em"}}>
                   <ul className="submenu-list list-unstyled">
                     <li className="submenu-item"><Link to='/admin/addProduct'><a className="submenu-link nav-link ">Add Product</a></Link></li>
-                    <li className="submenu-item"><Link to='/admin/addCategory' ><a className="submenu-link  nav-link ">Add Categorie</a></Link></li>
+                    <li className="submenu-item"><Link to='/admin/addCategory' ><a className="submenu-link  nav-link ">Add Category</a></Link></li>
                   </ul>
                 </div>
               </li>

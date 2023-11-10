@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,6 +19,7 @@ const ProductsByCategory = () => {
     nbrOfSells: number;
     consumptionDeadline: string;
     productCode: string;
+    weightedAveragePrice:string;
   };
   const { categoryId } = useParams();
   const [products, setProducts] = useState([] as ProductType[]);
@@ -36,35 +37,34 @@ const ProductsByCategory = () => {
   }, [categoryId]);
 
   return (
+    
     <TableContainer component={Paper}>
       <Table sx={{}} aria-label="simple table">
-        <TableHead>
+      <TableHead style={{backgroundColor:"#d3d3d340",}}>
           <TableRow>
-            <TableCell sx={{ backgroundColor: "#98d648", fontSize: "20px" }}>
+            <TableCell sx={{fontWeight: "bold" }}>
               Reference
             </TableCell>
-            <TableCell sx={{ backgroundColor: "#98d648", fontSize: "20px" }}>
+            <TableCell sx={{fontWeight: "bold" }}>
               Name
             </TableCell>
-            <TableCell sx={{ backgroundColor: "#98d648", fontSize: "20px" }}>
+            <TableCell sx={{fontWeight: "bold" }}>
               Description
             </TableCell>
-            <TableCell sx={{ backgroundColor: "#98d648", fontSize: "20px" }}>
-              Quantity
+            <TableCell sx={{fontWeight: "bold" }}>
+              Price
             </TableCell>
-            <TableCell sx={{ backgroundColor: "#98d648", fontSize: "20px" }}>
-              Number of sellers
+            <TableCell sx={{fontWeight: "bold" }}>
+              
             </TableCell>
-            <TableCell sx={{ backgroundColor: "#98d648", fontSize: "20px" }}>
-              consumption Deadline
-            </TableCell>
+
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody style={{margin:"3em"}}>
           {products.map((product) => (
             <TableRow
               key={product.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 },boxShadow: 0 }}
             >
               <TableCell component="th" scope="row">
                 {product.reference}
@@ -76,14 +76,12 @@ const ProductsByCategory = () => {
                 {product.description}
               </TableCell>
               <TableCell component="th" scope="row">
-                {product.quantityInStock}
+                {product.weightedAveragePrice} €
               </TableCell>
               <TableCell component="th" scope="row">
-                {product.nbrOfSells}
+                <Link style={{color:'#98d648'}} to={`/details/${product.id}`}>Details</Link>
               </TableCell>
-              <TableCell component="th" scope="row">
-                {product.consumptionDeadline}
-              </TableCell>
+
 
               {/* Add other product details as needed */}
             </TableRow>

@@ -37,7 +37,7 @@ const BestSellersAdm: FC<BestSellersAdmProps> = () => {
         <div className="container-xl">
           <div className="row g-3 mb-4 align-items-center justify-content-between">
             <div className="col-auto">
-              <h1 className="app-page-title mb-0">Orders</h1>
+              <h1 className="app-page-title mb-0">Dashboard</h1>
             </div>
 
 
@@ -78,7 +78,7 @@ const BestSellersAdm: FC<BestSellersAdmProps> = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {bestproducts.map((product) => (
+                    {bestproducts.slice(0, 10).map((product) => (
                       <tr key={product.id}>
                         <td className="cell">{product.id}</td>
                         <td className="cell">{product.reference}</td>
