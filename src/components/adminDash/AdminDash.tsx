@@ -16,9 +16,7 @@ const AdminDash: FC<AdminDashProps> = () => (
             &times;
           </a>
           <div className="app-branding">
-            <Link to="/">
-
-
+            <Link to="/admin/dash">
               <a className="app-logo" >
                 <img className="logo-icon me-2" src={logo} width={20} alt="logo" />
                 <span className="logo-text">LOKI</span>

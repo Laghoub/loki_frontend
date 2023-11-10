@@ -8,6 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import configData from "../config.json";
 
 const ProductsByCategory = () => {
   type ProductType = {
@@ -23,7 +24,7 @@ const ProductsByCategory = () => {
   };
   const { categoryId } = useParams();
   const [products, setProducts] = useState([] as ProductType[]);
-  const SERVER_URL = "http://localhost:8081/api/products";
+  const SERVER_URL = configData.SERVER_URL;
 
   useEffect(() => {
     axios

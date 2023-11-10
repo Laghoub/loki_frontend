@@ -21,12 +21,13 @@ import Categorie from "./Categories";
 import ProductByCat from "./ProductByCat";
 import Footer from "./Footer";
 import ProductsByCategory from "./ProductsByCategory";
+import configData from "../config.json";
 
 import { useParams } from 'react-router-dom';
 
 const ProductsCatPage = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
-  const SERVER_URL = "http://localhost:8081/api";
+  const SERVER_URL = configData.SERVER_URL;
 
   // Now, you can use the categoryId to fetch the category name from your data source
   // and display it in your component.

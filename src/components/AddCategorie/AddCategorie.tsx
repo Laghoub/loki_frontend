@@ -63,7 +63,7 @@ const AddCategorie: FC<AddCategorieProps> = () => {
               &times;
             </a>
             <div className="app-branding">
-              <Link to="/">
+              <Link to="/admin/dash">
 
 
                 <a className="app-logo" >

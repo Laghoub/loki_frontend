@@ -104,7 +104,7 @@ const AddProduct: FC<AddProductProps> = () => {
               &times;
             </a>
             <div className="app-branding">
-              <Link to="/">
+              <Link to="/admin/dash">
 
 
                 <a className="app-logo" >
