@@ -88,7 +88,6 @@ const AdminDash: FC<AdminDashProps> = () => {
       fetchUserData();
     }
   }, []);
-
   if (tokenA && isAdministrator) {
     return (
       <div className="app">

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
 import configData from "../../config.json";
 import axios from "axios";
-import LoginAdmin from "../LoginAdmin";
 import { useNavigate } from "react-router-dom";
+import LoginAdmin from "../LoginAdmin";
 
 interface AddProductProps {}
 interface Category {
@@ -17,14 +17,14 @@ interface Category {
 }
 const AddProduct: FC<AddProductProps> = () => {
   let navigate = useNavigate();
-  const tokenA = localStorage.getItem("tokenA");
-  const isAdministrator = localStorage.getItem("isAdmin");
   const logout = () => {
     localStorage.setItem("connectedA", "false");
     localStorage.setItem("isAdmin", "false");
     localStorage.removeItem("tokenA");
     navigate("/admin");
   };
+  const tokenA = localStorage.getItem("tokenA");
+  const isAdministrator = localStorage.getItem("isAdmin");
   const [productData, setProductData] = useState({
     reference: "",
     name: "",
@@ -123,7 +123,7 @@ const AddProduct: FC<AddProductProps> = () => {
                 &times;
               </a>
               <div className="app-branding">
-                <Link to="/">
+                <Link to="/admin/dash">
                   <a className="app-logo">
                     <img
                       className="logo-icon me-2"

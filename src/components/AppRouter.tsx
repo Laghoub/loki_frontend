@@ -22,6 +22,7 @@ import AddCategorie from "./AddCategorie/AddCategorie";
 import ProductsByCategory from "./ProductsByCategory";
 import ProductsCatPage from "./ProductsCatPage";
 import LoginAdmin from "./LoginAdmin";
+import AllProductsPage from "./AllProductsPage/AllProductsPage";
 
 const AppRouter = () => {
   const panierCookie = Cookies.get("panier");
@@ -45,6 +46,7 @@ const AppRouter = () => {
           path="/products/category/:categoryId"
           element={<ProductsCatPage />}
         />
+        <Route path="/all-products" element={<AllProductsPage />} />
 
         <Route path="/Checkout" element={<PaiementPage />} />
 

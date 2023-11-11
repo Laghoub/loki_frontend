@@ -3,9 +3,9 @@ import styles from "./AddProduct.module.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
 import configData from "../../config.json";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginAdmin from "../LoginAdmin";
-import { useNavigate } from "react-router-dom";
 interface AddCategorieProps {}
 interface Category {
   name: string;
@@ -79,7 +79,7 @@ const AddCategorie: FC<AddCategorieProps> = () => {
                 &times;
               </a>
               <div className="app-branding">
-                <Link to="/">
+                <Link to="/admin/dash">
                   <a className="app-logo">
                     <img
                       className="logo-icon me-2"
