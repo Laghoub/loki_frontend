@@ -81,10 +81,11 @@ export default function Header() {
   let navigate = useNavigate();
 
   const logout = () => {
-    localStorage.setItem("connected","false")
-   console.log(localStorage.getItem("connected"))
-   navigate('/')
-  }
+    localStorage.setItem("connected", "false");
+    localStorage.removeItem("token");
+    console.log(localStorage.getItem("connected"));
+    navigate("/");
+  };
   useEffect(() => {
     const fetchUserData = async () => {
       console.log(token);
@@ -252,10 +253,17 @@ export default function Header() {
             padding={2}
             sx={{ display: { xs: "none", sm: "flex" } }}
           >
-            {localStorage.getItem("connected")=="true" ? (
-              <a onClick={logout} style={{    marginBottom: "0.1em",cursor:'pointer'}}>Log out</a>
+            {localStorage.getItem("connected") == "true" ? (
+              <a
+                onClick={logout}
+                style={{ marginBottom: "0.1em", cursor: "pointer" }}
+              >
+                Log out
+              </a>
             ) : (
-              <Link to="/login"><p style={{    marginBottom: "0.1em"}}>Log in</p></Link>
+              <Link to="/login">
+                <p style={{ marginBottom: "0.1em" }}>Log in</p>
+              </Link>
             )}
           </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

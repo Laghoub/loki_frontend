@@ -22,7 +22,23 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const LoginAdmin = () => {
+  const defaultUserData = {
+    id: "",
+    login: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    imageUrl: "",
+    activated: "",
+    langKey: "",
+    createdBy: "",
+    createdDate: "",
+    lastModifiedBy: "",
+    lastModifiedDate: "",
+    authorities: [],
+  };
+  const [userData, setUserData] = useState(defaultUserData);
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -43,14 +59,14 @@ const Login = () => {
       // Si l'authentification réussit, vous pouvez rediriger l'utilisateur vers la page d'accueil
       // ou effectuer d'autres actions, par exemple, stocker le jeton JWT.
       console.log("Authentification réussie : ", response.data.id_token);
-      localStorage.setItem("token", response.data.id_token);
+      localStorage.setItem("tokenA", response.data.id_token);
 
       // Effacez les données du formulaire après une connexion réussie
       setFormData({ username: "", password: "" });
-      localStorage.setItem("connected", "true");
+      localStorage.setItem("connectedA", "true");
       localStorage.getItem("conncted");
       // Redirigez l'utilisateur vers la page d'accueil (remplacez /home par l'URL de votre choix)
-      window.location.href = "/";
+      window.location.href = "/admin/dash";
     } catch (error) {
       // Si l'authentification échoue, affichez un message d'erreur
       console.error("Erreur d'authentification : ", error);
@@ -58,13 +74,6 @@ const Login = () => {
     }
   };
   let navigate = useNavigate();
-
-  if (localStorage.getItem("connected") == "true") {
-    console.log(localStorage.getItem("connected"));
-    useEffect(() => {
-      navigate("/");
-    }, []);
-  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -84,7 +93,7 @@ const Login = () => {
           style={{ width: "80px", height: "80px" }}
         />
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign in ADMIN
         </Typography>
 
         {error && <div style={{ color: "red" }}>{error}</div>}
@@ -131,12 +140,11 @@ const Login = () => {
                 Forgot password?
               </Link>
             </Grid>
-            */}
             <Grid item>
               <Link href="/register" variant="body2" sx={{ color: "#186049" }}>
                 {"Don't have an account? Sign Up"}
               </Link>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </Box>
@@ -144,4 +152,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginAdmin;

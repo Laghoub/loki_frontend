@@ -21,6 +21,7 @@ import AddProduct from "./AddProduct/AddProduct";
 import AddCategorie from "./AddCategorie/AddCategorie";
 import ProductsByCategory from "./ProductsByCategory";
 import ProductsCatPage from "./ProductsCatPage";
+import LoginAdmin from "./LoginAdmin";
 
 const AppRouter = () => {
   const panierCookie = Cookies.get("panier");
@@ -33,6 +34,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<LoginAdmin />} />
 
         <Route path="/" element={<HomePage />} />
         <Route path="/panier" element={<Panier />} />
@@ -75,7 +77,6 @@ const AppRouter = () => {
         <Route path="/admin/addProduct" element={<AddProduct />} />
         <Route path="/admin/addCategory" element={<AddCategorie />} />
         <Route path="/admin/recentOrders" element={<Orders />} />
-
 
         <Route path="*" element={<Error404 />} />
 
