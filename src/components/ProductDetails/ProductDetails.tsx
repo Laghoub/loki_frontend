@@ -63,6 +63,7 @@ const ProductDetails = () => {
       // Sinon, ajoutez un nouvel élément au panier
       console.log;
       panier.push({
+        id : productData.id,
         nom: productData.name,
         prix: productData.weightedAveragePrice.toFixed(2),
 

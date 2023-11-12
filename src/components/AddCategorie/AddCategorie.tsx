@@ -6,6 +6,7 @@ import configData from "../../config.json";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginAdmin from "../LoginAdmin";
+
 interface AddCategorieProps {}
 interface Category {
   name: string;

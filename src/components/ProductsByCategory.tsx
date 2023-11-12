@@ -28,7 +28,7 @@ const ProductsByCategory = () => {
 
   useEffect(() => {
     axios
-      .get(`${SERVER_URL}/category/${categoryId}`)
+      .get(`${SERVER_URL}/products/category/${categoryId}`)
       .then((response) => {
         setProducts(response.data);
       })

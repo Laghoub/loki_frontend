@@ -7,10 +7,13 @@ import LoginAdmin from "../LoginAdmin";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import configData from "../../config.json";
 
-interface AdminDashProps {}
+interface AdminDashProps { }
 
 const AdminDash: FC<AdminDashProps> = () => {
+  const SERVER_URL = configData.SERVER_URL;
+
   let navigate = useNavigate();
   const defaultUserData = {
     id: "",
@@ -39,7 +42,7 @@ const AdminDash: FC<AdminDashProps> = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:8081/api/account", {
+        const response = await axios.get(`${SERVER_URL}/account`, {
           headers: {
             Authorization: `Bearer ${tokenA}`,
           },
@@ -243,7 +246,7 @@ const AdminDash: FC<AdminDashProps> = () => {
                             {/* SVG path here */}
                           </svg>
                         </span>
-                        <span className="nav-link-text" onClick={logout}>
+                        <span className="nav-link-text" onClick={logout} style={{cursor:"pointer"}}>
                           Log out
                         </span>
                       </a>

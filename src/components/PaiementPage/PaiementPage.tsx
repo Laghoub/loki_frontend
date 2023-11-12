@@ -7,6 +7,7 @@ import PopupCheckout from "../PopupCheckout/PopupCheckout";
 import { useLocation, useNavigate } from "react-router-dom";
 import configData from "../../config.json";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 const PaiementPage: FC = () => {
   const location = useLocation();
@@ -19,7 +20,7 @@ const PaiementPage: FC = () => {
       navigate("/")
     }, []);
   }
-  
+
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(0);
   const [form, setform] = useState();
@@ -100,11 +101,12 @@ const PaiementPage: FC = () => {
     city: "Paris",
     email: "abc@gmail.com",
     phone: "0661201010",
-        cardNumber: "",
+    cardNumber: "",
     cardName: "",
     cardCvv: "",
     monthExp: "",
-    yearExp: ""  };
+    yearExp: ""
+  };
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -122,24 +124,56 @@ const PaiementPage: FC = () => {
       cardName: formData.get("cardName"),
       cardCvv: formData.get("cardCvv"),
       monthExp: formData.get("monthExp"),
-      yearExp: formData.get("yearExp")    };
+      yearExp: formData.get("yearExp")
+    };
     setform(data)
 
 
     setConfirmationPopupVisible(true);
   };
 
-
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [isConfirmationPopupVisible, setConfirmationPopupVisible] =
     useState(false);
-  const handleConfirmation = (confirmed: boolean) => {
+  const handleConfirmation = async (confirmed: boolean) => {
     if (confirmed) {
       console.log(data)
-      navigate('/succesOrder', {
-        state: {
-          form: form
+
+
+
+      // Get product information from the cookie
+      const panier = Cookies.get('panier');
+      const products = panier ? JSON.parse(panier) : [];
+
+      try {
+        // Iterate over each product and create a lineofcommand
+        for (const product of products) {
+          const orderData = {
+            quantity: product.quantite,
+            total: (product.prix * product.quantite).toFixed(2),
+            created: new Date().toISOString(),
+            productId: product.id, 
+            clientId: 2, 
+          };
+
+          // Send POST request for each product
+          const response = await axios.post(`${SERVER_URL}/line-of-commands`, orderData);
+
+          // Log the response or handle it as needed
+          console.log(response.data);
         }
-      })
+
+        setSuccessMessage('Order placed successfully!');
+        navigate('/succesOrder', {
+          state: {
+            form: form
+          }
+        })
+      } catch (error) {
+        setErrorMessage('Error placing order. Please try again.');
+        console.error('Error placing order:', error);
+      }
     } else {
 
       Cookies.remove('panier')

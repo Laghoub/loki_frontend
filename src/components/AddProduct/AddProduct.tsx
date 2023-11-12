@@ -262,7 +262,7 @@ const AddProduct: FC<AddProductProps> = () => {
                             {/* SVG path here */}
                           </svg>
                         </span>
-                        <span className="nav-link-text" onClick={logout}>
+                        <span className="nav-link-text" onClick={logout} style={{cursor:"pointer"}}>
                           Log out
                         </span>
                       </a>

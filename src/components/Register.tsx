@@ -18,6 +18,7 @@ import logo from "../assets/logo.jpg";
 import { useState } from "react";
 import axios from "axios";
 import Alert from "@mui/material/Alert";
+import configData from "../config.json";
 
 function Copyright(props: any) {
   return (
@@ -40,6 +41,8 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const SERVER_URL = configData.SERVER_URL;
+
   const defaultFormData = {
     username: "",
     password: "",
@@ -78,19 +81,21 @@ export default function SignUp() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8081/api/register", {
+      const dataPost = {
         login: formData.username,
-        password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        activated:true,
         langKey: "fr",
-        phone: formData.phone,
         authorities: ["ROLE_Client"],
-      });
+        password: formData.password
+      }
+      console.log(dataPost)
+      const response = await axios.post(`${SERVER_URL}/register`, dataPost);
 
       setSuccess(
-        "Your registration has been successfully completed. Please access your email address to validate your account."
+        "Your registration has been successfully completed."
       );
       setFormData(defaultFormData);
       setValidationErrors({ email: false, phone: false });

@@ -20,6 +20,7 @@ import ImageTransition from "./ImageTransition";
 import Categorie from "./Categories";
 import ProductByCat from "./ProductByCat";
 import Footer from "./Footer";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -42,7 +43,7 @@ const HomePage = () => {
             <ImageTransition />
             <br />
             <div style={{margin: '1em'}}>
-            <h3>Products</h3>
+            <Link to="/all-products"><h4 style={{textDecoration:"underline"}}>Show all products</h4></Link>
             <ProductByCat />
             </div>
             

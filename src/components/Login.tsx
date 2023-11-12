@@ -21,8 +21,11 @@ import axios from "axios";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { useNavigate } from "react-router-dom";
+import configData from "../config.json";
 
 const Login = () => {
+  const SERVER_URL = configData.SERVER_URL;
+
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -36,7 +39,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8081/api/authenticate",
+        `${SERVER_URL}/authenticate`,
         formData
       );
 
