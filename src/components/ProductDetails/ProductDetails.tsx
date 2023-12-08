@@ -66,7 +66,7 @@ const ProductDetails = () => {
         id : productData.id,
         nom: productData.name,
         prix: productData.weightedAveragePrice.toFixed(2),
-
+        
         quantite: quantity,
       });
     }
@@ -174,17 +174,13 @@ const ProductDetails = () => {
                     fontSize: "x-large",
                   }}
                 >
-                  Product details
+                  Cell details
                 </span>
                 <h2 className="product-title">{productData.name}</h2>
                 <ul className="list-unstyled product-section">
                   <li>
-                    <strong>Brand:</strong>
-                    <a>{productData.brand}</a>
-                  </li>
-                  <li>
-                    <strong>Product Code:</strong>
-                    <span>{productData.productCode}</span>
+                    <strong>Cell reference:</strong>
+                    <span>{productData.reference}</span>
                   </li>
                   {/* 
                            <li>
@@ -232,7 +228,7 @@ const ProductDetails = () => {
                   <div className="price-section">
                     <span className="price-old"></span>
                     <span className="price-new">
-                      ${productData.weightedAveragePrice}
+                      {productData.weightedAveragePrice} €
                     </span>
                   </div>
                   <button

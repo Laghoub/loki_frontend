@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import styles from "./AddProduct.module.css";
+import "./AddProduct.module.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.jpg";
 import configData from "../../config.json";
@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoginAdmin from "../LoginAdmin";
 
-interface AddProductProps {}
+interface AddProductProps { }
 interface Category {
   id: number;
   name: string;
@@ -58,8 +58,8 @@ const AddProduct: FC<AddProductProps> = () => {
       });
   }, []);
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement >
+  ) => { 
     const { name, value } = e.target;
     setProductData({ ...productData, [name]: value });
   };
@@ -262,7 +262,7 @@ const AddProduct: FC<AddProductProps> = () => {
                             {/* SVG path here */}
                           </svg>
                         </span>
-                        <span className="nav-link-text" onClick={logout} style={{cursor:"pointer"}}>
+                        <span className="nav-link-text" onClick={logout} style={{ cursor: "pointer" }}>
                           Log out
                         </span>
                       </a>
@@ -286,7 +286,7 @@ const AddProduct: FC<AddProductProps> = () => {
               <div className="col-md-12 mb-4 float-right">
                 <div className="card mb-4">
                   <div className="card-header py-3">
-                    <h5 className="mb-0">Add a Product*</h5>
+                    <h5 className="mb-0">Add a product*</h5>
                   </div>
                   <div className="card-body">
                     {/* 2 column grid layout with text inputs for the first and last names */}
@@ -306,7 +306,7 @@ const AddProduct: FC<AddProductProps> = () => {
 
                     {/* Name */}
                     <div className="form-group">
-                      <label htmlFor="name">Name</label>
+                      <label htmlFor="name">Name*</label>
                       <input
                         type="text"
                         id="name"
@@ -352,19 +352,22 @@ const AddProduct: FC<AddProductProps> = () => {
                       />
                     </div>
 
-                    {/* Description */}
-                    <div className="form-group">
-                      <label htmlFor="description">Description*</label>
-                      <input
-                        type="text"
-                        id="description"
-                        name="description"
-                        className="form-control"
-                        value={productData.description}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
+                      {/* Description */}
+                      <div className="form-group">
+                        <label htmlFor="description">Description*</label>
+                        <div className="resizable-input">
+                          <textarea
+                            id="description"
+                            name="description"
+                            className="form-control"
+                            value={productData.description}
+                            onChange={handleInputChange}
+
+                            required
+                            style={{ resize: 'both', overflow: 'auto' }}
+                          />
+                        </div>
+                      </div>
 
                     {/* Quantity in Stock */}
                     <div className="form-group">

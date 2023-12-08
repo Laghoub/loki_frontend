@@ -19,7 +19,7 @@ type ProductType = {
   weightedAveragePrice: string;
 };
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 2;
 
 const AllProducts: React.FC = () => {
   const [products, setProducts] = useState([] as ProductType[]);
@@ -36,7 +36,7 @@ const AllProducts: React.FC = () => {
 
   const fetchProducts = (page: number) => {
     axios
-      .get(`${SERVER_URL}/products?page=${page}&size=${ITEMS_PER_PAGE}`)
+      .get(`${SERVER_URL}/products?page=${page-1}&size=${ITEMS_PER_PAGE}`)
       .then((response) => {
         console.log(response)
         setProducts(response.data);

@@ -289,7 +289,7 @@ const PaiementPage: FC = () => {
                   {/* Email input */}
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="email">
-                      Email
+                      Email*
                     </label>
                     <input
                       type="email"

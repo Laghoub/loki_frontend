@@ -55,7 +55,7 @@ const LoginAdmin = () => {
 
     try {
       const response = await axios.post(
-        `${SERVER_URL}/api/authenticate`,
+        `${SERVER_URL}/authenticate`,
         formData
       );
 
@@ -124,10 +124,6 @@ const LoginAdmin = () => {
             autoComplete="current-password"
             value={formData.password}
             onChange={handleChange}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
           />
           <Button
             type="submit"
