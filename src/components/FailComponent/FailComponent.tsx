@@ -10,12 +10,13 @@ interface FailComponentProps {}
 const FailComponent: FC<FailComponentProps> = () => {
   let navigate = useNavigate();
   const isCookie = Cookies.get("panier");
-
+  /*
   if (isCookie == undefined || isCookie == "[]" || isCookie == "") {
     useEffect(() => {
       navigate("/");
     }, []);
   }
+  */
   return (
     <>
       <Header />
@@ -24,9 +25,7 @@ const FailComponent: FC<FailComponentProps> = () => {
           <div className="container text-center">
             <h3>Oh no!</h3>
             <img src={dislike} />
-            <p className="lead w-lg-50 mx-auto">
-              Your order has been canceled.
-            </p>
+            <p className="lead w-lg-50 mx-auto">Payment operation error</p>
             <Link to="/">
               {" "}
               <button

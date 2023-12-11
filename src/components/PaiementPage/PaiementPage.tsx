@@ -8,19 +8,48 @@ import { useLocation, useNavigate } from "react-router-dom";
 import configData from "../../config.json";
 import Cookies from "js-cookie";
 import axios from "axios";
+import CryptoJS from "crypto-js";
+
+class AESEncryption {
+  keySize: number;
+  ivSize: number;
+
+  constructor() {
+    this.keySize = 256;
+    this.ivSize = 128;
+  }
+
+  generateKey() {
+    return CryptoJS.lib.WordArray.random(this.keySize / 8);
+  }
+
+  generateIV() {
+    return CryptoJS.lib.WordArray.random(this.ivSize / 8);
+  }
+
+  encrypt(message: any, key: any, iv: any) {
+    const encrypted = CryptoJS.AES.encrypt(message, key, {
+      iv: iv,
+      padding: CryptoJS.pad.Pkcs7,
+      mode: CryptoJS.mode.CBC,
+    });
+    return encrypted.toString();
+  }
+}
 
 const PaiementPage: FC = () => {
   const location = useLocation();
   const SERVER_URL = configData.SERVER_URL;
   let navigate = useNavigate();
-  const isCookie = Cookies.get('panier')
+  const isCookie = Cookies.get("panier");
 
   if (isCookie == undefined || isCookie == "[]" || isCookie == "") {
     useEffect(() => {
-      navigate("/")
+      navigate("/");
     }, []);
   }
-
+  const [showCardNumberInput, setShowCardNumberInput] = useState(false);
+  const [paimentSuccess, setPaimentSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(0);
   const [form, setform] = useState();
@@ -40,6 +69,15 @@ const PaiementPage: FC = () => {
     }
   };
 
+  const handleCardNumberChange = (e: any) => {
+    const inputValue = e.target.value;
+    dataTest.cardNumber = inputValue;
+  };
+
+  const handleCardPaymentOptionClick = () => {
+    setShowCardNumberInput(true);
+  };
+
   const handlePhoneChange = (e: any) => {
     let inputValue = e.target.value;
     // Regular expression to validate phone number format
@@ -52,8 +90,6 @@ const PaiementPage: FC = () => {
       setPhone(inputValue);
     }
   };
-
-
 
   // Get the total price and add shupping fee
 
@@ -90,8 +126,8 @@ const PaiementPage: FC = () => {
       });
   }, [SERVER_URL]); */
   }
-  var data: any
-  var dataTest: any
+  var data: any;
+  var dataTest: any;
   dataTest = {
     firstName: "Marouane",
     lastName: "Lok",
@@ -105,9 +141,9 @@ const PaiementPage: FC = () => {
     cardName: "",
     cardCvv: "",
     monthExp: "",
-    yearExp: ""
+    yearExp: "",
   };
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
@@ -124,26 +160,78 @@ const PaiementPage: FC = () => {
       cardName: formData.get("cardName"),
       cardCvv: formData.get("cardCvv"),
       monthExp: formData.get("monthExp"),
-      yearExp: formData.get("yearExp")
+      yearExp: formData.get("yearExp"),
     };
-    setform(data)
+    setform(data);
 
+    // ... (autres traitements)
 
+    if (showCardNumberInput) {
+      data.cardNumber = formData.get("cardNumber") as string;
+    }
+
+    // ... (autres traitements)
+
+    // Vérifier si le champ cardNumber n'est pas vide avant de procéder au paiement en ligne
+    if (data.cardNumber && data.cardNumber.trim() !== "") {
+      // Créer une instance de la classe AESEncryption
+      const aes = new AESEncryption();
+
+      // Générer une clé et un vecteur d'initialisation (IV)
+      const key = aes.generateKey();
+      const iv = aes.generateIV();
+
+      // Construire l'objet Operation avec les données cryptées
+      const Operation = {
+        receiverAccount: aes
+          .encrypt(formData.get("cardNumber"), key, iv)
+          .toString(),
+        amount: aes.encrypt(totalCharge.toString(), key, iv).toString(),
+        label: aes.encrypt("paiment", key, iv).toString(),
+        senderAccount: "1234322332233",
+        isAdmin: aes.encrypt("notadmin", key, iv).toString(),
+        iv: CryptoJS.enc.Base64.stringify(iv),
+        key: CryptoJS.enc.Base64.stringify(key),
+      };
+
+      try {
+        // Envoyer la requête POST vers le serveur
+        const response = await axios.post(
+          `http://localhost:PORT/operaton/transfer`,
+          Operation
+        );
+
+        if (response.data && response.data.message === "true") {
+          setPaimentSuccess(true);
+          setConfirmationPopupVisible(true);
+        } else {
+          console.error("Error in money transfer:", response.data.error);
+          setErrorMessage("Money transfer failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error in money transfer:", error);
+        setErrorMessage("Error in money transfer. Please try again.");
+      }
+    } else {
+      // Afficher un message d'erreur si le champ cardNumber est vide
+      setErrorMessage("Card number is required for online payment.");
+      setPaimentSuccess(true);
+    }
+
+    // Afficher la popup de confirmation
     setConfirmationPopupVisible(true);
   };
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isConfirmationPopupVisible, setConfirmationPopupVisible] =
     useState(false);
   const handleConfirmation = async (confirmed: boolean) => {
-    if (confirmed) {
-      console.log(data)
-
-
+    if (confirmed && paimentSuccess) {
+      console.log(data);
 
       // Get product information from the cookie
-      const panier = Cookies.get('panier');
+      const panier = Cookies.get("panier");
       const products = panier ? JSON.parse(panier) : [];
 
       try {
@@ -153,35 +241,34 @@ const PaiementPage: FC = () => {
             quantity: product.quantite,
             total: (product.prix * product.quantite).toFixed(2),
             created: new Date().toISOString(),
-            productId: product.id, 
-            clientId: 2, 
+            productId: product.id,
+            clientId: 2,
           };
 
           // Send POST request for each product
-          const response = await axios.post(`${SERVER_URL}/line-of-commands`, orderData);
+          const response = await axios.post(
+            `${SERVER_URL}/line-of-commands`,
+            orderData
+          );
 
           // Log the response or handle it as needed
           console.log(response.data);
         }
 
-        setSuccessMessage('Order placed successfully!');
-        navigate('/succesOrder', {
+        setSuccessMessage("Order placed successfully!");
+        navigate("/succesOrder", {
           state: {
-            form: form
-          }
-        })
+            form: form,
+          },
+        });
       } catch (error) {
-        setErrorMessage('Error placing order. Please try again.');
-        console.error('Error placing order:', error);
+        setErrorMessage("Error placing order. Please try again.");
+        console.error("Error placing order:", error);
       }
     } else {
-
-      Cookies.remove('panier')
-      navigate('/failedOrder')
-
+      navigate("/failedOrder");
     }
   };
-
 
   return (
     <div>
@@ -390,9 +477,7 @@ const PaiementPage: FC = () => {
           onConfirm={() => handleConfirmation(true)}
           onCancel={() => handleConfirmation(false)}
           onClose={() => setConfirmationPopupVisible(false)}
-
           dataForm={data}
-
         />
       )}
     </div>
