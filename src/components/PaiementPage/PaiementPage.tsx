@@ -109,7 +109,6 @@ const PaiementPage: FC = () => {
     }
   }, [initFee, shipping_fee]);
 
-
   /*useEffect(() => {
   const id = orderId; // Replace with the actual id parameter or source
   const apiUrl = `${SERVER_URL}/commands/${id}`;
@@ -212,212 +211,212 @@ const PaiementPage: FC = () => {
        setPaimentSuccess(true);
      }
  */
-     // Afficher la popup de confirmation
-     setConfirmationPopupVisible(true);
-   
-  }
-    const [successMessage, setSuccessMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [isConfirmationPopupVisible, setConfirmationPopupVisible] =
-      useState(false);
-    const handleConfirmation = async (confirmed: boolean) => {
-      if (confirmed) {
-        const aes = new AESEncryption();
+    // Afficher la popup de confirmation
+    setConfirmationPopupVisible(true);
+  };
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isConfirmationPopupVisible, setConfirmationPopupVisible] =
+    useState(false);
+  const handleConfirmation = async (confirmed: boolean) => {
+    if (confirmed) {
+      const aes = new AESEncryption();
 
-        // Générer une clé et un vecteur d'initialisation (IV)
-        const key = aes.generateKey();
-        const iv = aes.generateIV();
+      // Générer une clé et un vecteur d'initialisation (IV)
+      const key = aes.generateKey();
+      const iv = aes.generateIV();
+      const ivBase64 = CryptoJS.enc.Base64.stringify(iv);
+      const keyBase64 = CryptoJS.enc.Base64.stringify(key);
 
-        // Construire l'objet Operation avec les données cryptées
-        const Operation = {
-          receiverAccount: "3LOE1KQF",
-          amount: aes.encrypt(totalCharge.toString(), key, iv).toString(),
-          label: aes.encrypt("paiment", key, iv).toString(),
-          senderAccount: "4X1JFHA9",
-          isAdmin: aes.encrypt("notadmin", key, iv).toString(),
-          iv: CryptoJS.enc.Base64.stringify(iv),
-          key: CryptoJS.enc.Base64.stringify(key),
-        };
+      // Construire l'objet Operation avec les données cryptées
+      const Operation = {
+        receiverAccount: aes.encrypt("3LOE1KQF", key, iv).toString(),
+        amount: aes.encrypt(totalCharge.toString(), key, iv).toString(),
+        label: aes.encrypt("paiment", key, iv).toString(),
+        senderAccount: "4X1JFHA9",
+        isAdmin: aes.encrypt("notadmin", key, iv).toString(),
+        iv: CryptoJS.enc.Base64.stringify(iv),
+        key: CryptoJS.enc.Base64.stringify(key),
+      };
 
-        try {
-          // Envoyer la requête POST vers le serveur
-          const response = await axios.post(
-            configData.Transac_request,
-            Operation
-          );
+      try {
+        // Envoyer la requête POST vers le serveur
+        const response = await axios.post(
+          configData.Transac_request,
+          Operation
+        );
 
-          if (response.data && response.data.message === "true") {
-            setPaimentSuccess(true);
-                    // Get product information from the cookie
-        const panier = Cookies.get("panier");
-        const products = panier ? JSON.parse(panier) : [];
+        if (response.data && response.data.message === "true") {
+          setPaimentSuccess(true);
+          // Get product information from the cookie
+          const panier = Cookies.get("panier");
+          const products = panier ? JSON.parse(panier) : [];
 
-        try {
-          // Iterate over each product and create a lineofcommand
-          for (const product of products) {
-            const orderData = {
-              quantity: product.quantite,
-              total: (product.prix * product.quantite).toFixed(2),
-              created: new Date().toISOString(),
-              productId: product.id,
-              clientId: 2,
-            };
+          try {
+            // Iterate over each product and create a lineofcommand
+            for (const product of products) {
+              const orderData = {
+                quantity: product.quantite,
+                total: (product.prix * product.quantite).toFixed(2),
+                created: new Date().toISOString(),
+                productId: product.id,
+                clientId: 2,
+              };
 
-            // Send POST request for each product
-            const response = await axios.post(
-              `${SERVER_URL}/line-of-commands`,
-              orderData
-            );
+              // Send POST request for each product
+              const response = await axios.post(
+                `${SERVER_URL}/line-of-commands`,
+                orderData
+              );
 
-            // Log the response or handle it as needed
-            console.log(response.data);
-          }
+              // Log the response or handle it as needed
+              console.log(response.data);
+            }
 
-          setSuccessMessage("Order placed successfully!");
-          navigate("/succesOrder", {
-            state: {
-              form: form,
-            },
-          });
-        } catch (error) {
-          setErrorMessage("Error placing order. Please try again.");
-          console.error("Error placing order:", error);
-          navigate("/failedOrder");
-        }
-          } else {
-            console.error("Error in money transfer:", response.data.error);
-            setErrorMessage("Money transfer failed. Please try again.");
+            setSuccessMessage("Order placed successfully!");
+            navigate("/succesOrder", {
+              state: {
+                form: form,
+              },
+            });
+          } catch (error) {
+            setErrorMessage("Error placing order. Please try again.");
+            console.error("Error placing order:", error);
             navigate("/failedOrder");
           }
-        } catch (error) {
-          console.error("Error in money transfer:", error);
-          setErrorMessage("Error in money transfer. Please try again.");
+        } else {
+          console.error("Error in money transfer:", response.data.error);
+          setErrorMessage("Money transfer failed. Please try again.");
           navigate("/failedOrder");
         }
-
-      } else {
+      } catch (error) {
+        console.error("Error in money transfer:", error);
+        setErrorMessage("Error in money transfer. Please try again.");
         navigate("/failedOrder");
       }
-    };
+    } else {
+      navigate("/failedOrder");
+    }
+  };
 
-    return (
-      <div>
-        <Header />
-        <Menu />
-        <div className="Bill-form" style={{ margin: "2em" }}>
-          <form onSubmit={onSubmit}>
-            <div className="row">
-              <div className="col-md-8 mb-4">
-                <div className="card mb-4">
-                  <div className="card-header py-3">
-                    <h5 className="mb-0">Shipping informations</h5>
-                  </div>
-                  <div className="card-body">
-                    {/* 2 column grid layout with text inputs for the first and last names */}
-                    <div className="row mb-6">
-                      <div className="col">
-                        <div className="form-outline">
-                          <label className="form-label" htmlFor="firstName">
-                            First name*
-                          </label>
-                          <input
-                            type="text"
-                            id="firstName"
-                            name="firstName"
-                            className="form-control"
-                            maxLength={50}
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col">
-                        <div className="form-outline">
-                          <label className="form-label" htmlFor="lastName">
-                            Last name*
-                          </label>
-                          <input
-                            type="text"
-                            id="lastName"
-                            className="form-control"
-                            name="lastName"
-                            maxLength={50}
-                            required
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <br />
-                    {/* Text input */}
-                    <div className="form-outline mb-6">
-                      <label className="form-label" htmlFor="company">
-                        Company name
-                      </label>
-                      <input
-                        type="text"
-                        id="company"
-                        name="company"
-                        className="form-control"
-                        maxLength={150}
-                      />
-                    </div>
-                    <br />
-                    {/* Text input */}
-                    <div className="form-outline mb-6">
-                      <label className="form-label" htmlFor="address">
-                        Address*
-                      </label>
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        className="form-control"
-                        required
-                      />
-                    </div>
-                    <br />
-                    <div className="form-outline mb-6 row">
-                      <div className="col-md-2">
-                        <label className="form-label" htmlFor="postalCode">
-                          Postal Code*
-                        </label>
-                        <input
-                          type="number"
-                          id="postalCode"
-                          name="postalCode"
-                          className="form-control mb-3"
-                          required
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <label className="form-label" htmlFor="city">
-                          City*
+  return (
+    <div>
+      <Header />
+      <Menu />
+      <div className="Bill-form" style={{ margin: "2em" }}>
+        <form onSubmit={onSubmit}>
+          <div className="row">
+            <div className="col-md-8 mb-4">
+              <div className="card mb-4">
+                <div className="card-header py-3">
+                  <h5 className="mb-0">Shipping informations</h5>
+                </div>
+                <div className="card-body">
+                  {/* 2 column grid layout with text inputs for the first and last names */}
+                  <div className="row mb-6">
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="form-label" htmlFor="firstName">
+                          First name*
                         </label>
                         <input
                           type="text"
-                          id="city"
-                          name="city"
-                          className="form-control mb-3"
+                          id="firstName"
+                          name="firstName"
+                          className="form-control"
+                          maxLength={50}
                           required
                         />
                       </div>
                     </div>
 
-                    {/* Email input */}
-                    <div className="form-outline mb-6">
-                      <label className="form-label" htmlFor="email">
-                        Email*
+                    <div className="col">
+                      <div className="form-outline">
+                        <label className="form-label" htmlFor="lastName">
+                          Last name*
+                        </label>
+                        <input
+                          type="text"
+                          id="lastName"
+                          className="form-control"
+                          name="lastName"
+                          maxLength={50}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                  {/* Text input */}
+                  <div className="form-outline mb-6">
+                    <label className="form-label" htmlFor="company">
+                      Company name
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      className="form-control"
+                      maxLength={150}
+                    />
+                  </div>
+                  <br />
+                  {/* Text input */}
+                  <div className="form-outline mb-6">
+                    <label className="form-label" htmlFor="address">
+                      Address*
+                    </label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <br />
+                  <div className="form-outline mb-6 row">
+                    <div className="col-md-2">
+                      <label className="form-label" htmlFor="postalCode">
+                        Postal Code*
                       </label>
                       <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className="form-control"
+                        type="number"
+                        id="postalCode"
+                        name="postalCode"
+                        className="form-control mb-3"
                         required
                       />
                     </div>
-                    <br />
-                    {/* Number input 
+                    <div className="col-md-6">
+                      <label className="form-label" htmlFor="city">
+                        City*
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        className="form-control mb-3"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Email input */}
+                  <div className="form-outline mb-6">
+                    <label className="form-label" htmlFor="email">
+                      Email*
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                  <br />
+                  {/* Number input 
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="phone">
                       Phone
@@ -432,8 +431,8 @@ const PaiementPage: FC = () => {
                       required
                     />
                   </div>*/}
-                    <br />
-                    {/* Message input 
+                  <br />
+                  {/* Message input 
                   <div className="form-outline mb-6">
                     <label className="form-label" htmlFor="additionalInfo">
                       Additional information
@@ -446,7 +445,7 @@ const PaiementPage: FC = () => {
                     ></textarea>
                   </div>*/}
 
-                    {/* Checkbox 
+                  {/* Checkbox 
               <div className="form-check d-flex justify-content-center mb-2">
                 <input
                   className="form-check-input me-2"
@@ -459,59 +458,59 @@ const PaiementPage: FC = () => {
                   Create an account?
                 </label>
               </div>*/}
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-4 mb-4">
-                <div className="card mb-4">
-                  <div className="card-header py-3">
-                    <h5 className="mb-0">Summary</h5>
-                  </div>
-                  <div className="card-body">
-                    <ul className="list-group list-group-flush">
-                      <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                        Products
-                        <span> {initFee} €</span>
-                      </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center px-0">
-                        Shipping
-                        <span> {shipping_fee} € </span>
-                      </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                        <div>
-                          <strong>Total amount</strong>
-                        </div>
-                        <span>
-                          <strong> {totalCharge} €</strong>
-                        </span>
-                      </li>
-                    </ul>
-
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-lg btn-block"
-                    >
-                      Make purchase
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
-            <CheckoutForm />
-          </form>
-        </div>
 
-        {isConfirmationPopupVisible && (
-          <PopupCheckout
-            onConfirm={() => handleConfirmation(true)}
-            onCancel={() => handleConfirmation(false)}
-            onClose={() => setConfirmationPopupVisible(false)}
-            dataForm={data}
-          />
-        )}
+            <div className="col-md-4 mb-4">
+              <div className="card mb-4">
+                <div className="card-header py-3">
+                  <h5 className="mb-0">Summary</h5>
+                </div>
+                <div className="card-body">
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                      Products
+                      <span> {initFee} €</span>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center px-0">
+                      Shipping
+                      <span> {shipping_fee} € </span>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                      <div>
+                        <strong>Total amount</strong>
+                      </div>
+                      <span>
+                        <strong> {totalCharge} €</strong>
+                      </span>
+                    </li>
+                  </ul>
+
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg btn-block"
+                  >
+                    Make purchase
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <CheckoutForm />
+        </form>
       </div>
-    );
-}
+
+      {isConfirmationPopupVisible && (
+        <PopupCheckout
+          onConfirm={() => handleConfirmation(true)}
+          onCancel={() => handleConfirmation(false)}
+          onClose={() => setConfirmationPopupVisible(false)}
+          dataForm={data}
+        />
+      )}
+    </div>
+  );
+};
 
 export default PaiementPage;
