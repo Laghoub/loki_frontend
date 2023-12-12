@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../components/PaiementPage/PaiementPage.module.css";
 const CheckoutForm: React.FC = () => {
-  const [paymentMethod, setPaymentMethod] = useState("cash-on-delivery");
+  const [paymentMethod, setPaymentMethod] = useState("BANK");
   const handlePaymentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentMethod(event.target.value);
   };
@@ -87,120 +87,11 @@ const CheckoutForm: React.FC = () => {
                 name="paymentMethod"
                 value="cash-on-delivery"
                 className="form-check-input"
-                checked={paymentMethod === "cash-on-delivery"}
+                checked={true}
                 onChange={handlePaymentChange}
               />
-              <label className="form-check-label">Cash on Delivery</label>
+              <label className="form-check-label">Pay using bank account</label>
             </div>
-            <div className="form-check mb-3">
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="card-payment"
-                className="form-check-input"
-                checked={paymentMethod === "card-payment"}
-                onChange={handlePaymentChange}
-              />
-              <label className="form-check-label">Card Payment</label>
-            </div>
-
-            {/* Card Details (Visible when Card Payment is selected) */}
-            {paymentMethod === "card-payment" && (
-              <div className="form-outline mb-4 ">
-                <input
-                  type="text"
-                  id="cardNumber"
-                  className={`margin-bot1 form-control ${
-                    isCardNumberValid ? "" : "is-invalid"
-                  }`}
-                  placeholder="Card Number"
-                  name="cardNumber"
-                  value={cardNumber}
-                  onChange={handleCardNumberChange}
-                />
-                {!isCardNumberValid && (
-                  <div className="invalid-feedback">Invalid card number</div>
-                )}
-
-                <input
-                  type="text"
-                  id="cardName"
-                  className="form-control margin-bot1"
-                  placeholder="Card Holder's name"
-                  value={cardName}
-                  name="cardName"
-                  onChange={handleCardNameChange}
-                />
-
-                <div className="row">
-                  <div className="col-md-4">
-                    <input
-                      type="text"
-                      id="cardCvv"
-                      className={`margin-bot1 form-control ${
-                        cvvError ? "is-invalid" : ""
-                      }`}
-                      placeholder="CVV"
-                      name="cardCvv"
-                      value={cvv}
-                      onChange={handleCvvChange}
-                    />
-                    {cvvError && (
-                      <div className="invalid-feedback">
-                        CVV should be 3 numbers
-                      </div>
-                    )}
-                  </div>
-                  <div className="col-md-4 ">
-                    <span className="expiration " style={{ display: "flex" }}>
-                      <input
-                        type="text"
-                        id="monthExp"
-                        placeholder="MM"
-                        name="monthExp"
-                        style={{ width: "6em" }}
-                        className={`margin-bot1 form-control  ${
-                          monthError ? "is-invalid" : ""
-                        }`}
-                        value={month}
-                        onChange={handleMonthChange}
-                      />
-                      <span
-                        style={{
-                          marginLeft: "0.5em",
-                          marginRight: "0.5em",
-                          marginTop: "0.5em",
-                        }}
-                      >
-                        /
-                      </span>
-                      <input
-                        type="text"
-                        id="yearExp"
-                        placeholder="YY"
-                        style={{ width: "6em" }}
-                        name="yearExp"
-                        className={`margin-bot1  form-control ${
-                          yearError ? "is-invalid" : ""
-                        }`}
-                        value={year}
-                        onChange={handleYearChange}
-                      />
-                      {(yearError || monthError) && (
-                        <div className="invalid-feedback">Invalid Date</div>
-                      )}
-                    </span>
-                  </div>
-                </div>
-
-                {cardType === "visa" && (
-                  <img src="/src/assets/visa-logo-png.webp" alt="Visa Logo" />
-                )}
-                {cardType === "mastercard" && (
-                  <img src="/src/assets/mastercard.png" alt="MasterCard Logo" />
-                )}
-              </div>
-            )}
           </div>
         </div>
       </div>

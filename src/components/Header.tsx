@@ -19,7 +19,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import cofig from '../config.json'
+  
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -90,7 +91,7 @@ export default function Header() {
     const fetchUserData = async () => {
       console.log(token);
       try {
-        const response = await axios.get("http://localhost:8081/api/account", {
+        const response = await axios.get(cofig.SERVER_URL+"/account", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

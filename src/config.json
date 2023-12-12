@@ -1,5 +1,7 @@
 {
     "SERVER_URL": "http://localhost:8081/api",
     "SHIPPING": 5,
-    "SHIPPINGEXPRESS":4
+    "SHIPPINGEXPRESS":4,
+    "Transac_request": "http://localhost:5001/operation/transfer"
+
   }
